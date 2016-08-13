@@ -12,14 +12,22 @@
     <%@ include file="/import/dependencies.jsp"%>
     <%@ include file="/import/header.jsp"%>
     <%@ include file="/import/hibernateConfig.jsp"%>
-    <%        
-        int id = Integer.parseInt(request.getParameter("id"));
+    <%        int id = Integer.parseInt(request.getParameter("id"));
         //int id=1;
         Criteria cr = hib_session.createCriteria(ProductByColor.class);
         cr.add(Restrictions.eq("productByColorId", id));
-        ProductByColor pdc=(ProductByColor)cr.list().get(0);
-        ProductDetail pd=pdc.getProductDetail();
-        
+        ProductByColor pdc = (ProductByColor) cr.list().get(0);
+        ProductDetail pd = pdc.getProductDetail();
+
+        cr = hib_session.createCriteria(ProductByColor.class);
+        cr.add(Restrictions.eq("productDetail", pd));
+        List color = cr.list();
+
+        cr = hib_session.createCriteria(ProductSize.class);
+        cr.add(Restrictions.eq("productDetail", pd));
+        List size = cr.list();
+
+
     %>
     <body ng-app="popcon"ng-controller="search as ctrl">
 
@@ -30,10 +38,10 @@
 
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <ol class="breadcrumb">
-                        <li><a href="#"><%= pd.getMainCategory().getName() %></a></li>
-                        <li><a href="#"><%= pd.getFirstSubcategory().getName() %></a></li>
-                        <li><a href="#"><%= pd.getSecondSubcategory().getName() %></a></li>
-                        <li class="active"><%= pdc.getTitle() %></li>
+                        <li><a href="#"><%= pd.getMainCategory().getName()%></a></li>
+                        <li><a href="#"><%= pd.getFirstSubcategory().getName()%></a></li>
+                        <li><a href="#"><%= pd.getSecondSubcategory().getName()%></a></li>
+                        <li class="active"><%= pdc.getTitle()%></li>
                     </ol>
                 </div>
 
@@ -66,7 +74,7 @@
 
                         <div class="col-md-12" style="margin-left: 15px;">
                             <h4>
-                                <%= pdc.getTitle() %>
+                                <%= pdc.getTitle()%>
                             </h4>
                         </div>
 
@@ -79,25 +87,19 @@
                         <div class="col-md-12" style="margin-left: 15px;">
 
                             <div class="row">
-                                <div class="col-md-1 col-sm-1">
-                                    <div style="background-color: green;" class="product_color"></div>
-                                </div>
+
+                                <%
+                                    for (Object o : color) {
+                                        ProductByColor clr = (ProductByColor) o;
+                                %>
 
                                 <div class="col-md-1 col-sm-1">
-                                    <div style="background-color: red;" class="product_color"></div>
+                                    <div style="background-color: <%= clr.getHex()%>;" class="product_color"></div>
                                 </div>
 
-                                <div class="col-md-1 col-sm-1">
-                                    <div style="background-color: orange;" class="product_color"></div>
-                                </div>
-
-                                <div class="col-md-1 col-sm-1">
-                                    <div style="background-color: orchid;" class="product_color"></div>
-                                </div>
-
-                                <div class="col-md-1 col-sm-1">
-                                    <div style="background-color: green;" class="product_color"></div>
-                                </div>
+                                <%
+                                    }
+                                %>
 
                             </div>
                         </div><!--End of Col-->
@@ -106,36 +108,26 @@
                         <div class="col-md-12">
 
                             <div class="row">
+                                
+                                 <%
+                                    for (Object o : size) {
+                                        ProductSize s=(ProductSize)o;
+                                %>
+                                
                                 <div class="col-md-1 col-sm-1">
                                     <md-button class="md-fab md-mini md-primary">
-                                        <b>S</b>
+                                        <b><%= s.getSizeType() %></b>
                                     </md-button>
                                 </div>
 
-                                <div class="col-md-1 col-sm-1">
-                                    <md-button class="md-fab md-mini md-primary">
-                                        <b>L</b>
-                                    </md-button>
-                                </div>
-
-                                <div class="col-md-1 col-sm-1">
-                                    <md-button class="md-fab md-mini md-primary">
-                                        <b>XL</b>
-                                    </md-button>
-                                </div>
-
-                                <div class="col-md-1 col-sm-1">
-                                    <md-button class="md-fab md-mini md-primary">
-                                        <b>XXL</b>
-                                    </md-button>
-                                </div>
-
+                                <%}%>
+                                
                             </div>
                         </div><!--End of Col-->
 
 
                         <div class="col-md-4 col-sm-4" style="margin-left: 15px;">
-                            <a>Select Guide</a>
+                            <a>Size Guide</a>
                         </div><!--End of Col-->
 
 
@@ -163,17 +155,17 @@
                             <md-tabs md-dynamic-height md-border-bottom>
                                 <md-tab label="Style Tip">
                                     <md-content class="md-padding">
-                                        <p> Wear this T-shirt with a pair of blue track pants and casual shoes. Add on a wristband to complete the attire. </p>   
+                                        <p><%=pd.getProductDetail()%></p>   
                                     </md-content>
                                 </md-tab>
                                 <md-tab label="Material">
                                     <md-content class="md-padding">
-                                        <p>Dark grey melange T-shirt, has a V-neck, short sleeves</p>   
+                                        <p><%=pd.getMaterialDetail()%></p>   
                                     </md-content>
                                 </md-tab>
                                 <md-tab label="care">
                                     <md-content class="md-padding">
-                                        <p>The model (height 6'2" and shoulders 22") is wearing a size M</p> 
+                                        <p><%=pd.getCare()%></p> 
                                     </md-content>
                                 </md-tab>
                             </md-tabs>
