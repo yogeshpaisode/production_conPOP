@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Aug 13, 2016 2:10:13 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="hibernate.FirstSubcategory" table="first_subcategory" catalog="iguanast_con" optimistic-lock="version">
+        <id name="firstSubcategoryId" type="java.lang.Integer">
+            <column name="first_subcategory_ID" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="mainCategory" class="hibernate.MainCategory" fetch="select">
+            <column name="main_category_ID" not-null="true" />
+        </many-to-one>
+        <property name="name" type="string">
+            <column name="name" length="65535" not-null="true" />
+        </property>
+        <set name="secondSubcategories" table="second_subcategory" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="first_subcategory_ID" not-null="true" />
+            </key>
+            <one-to-many class="hibernate.SecondSubcategory" />
+        </set>
+        <set name="productDetails" table="product_Detail" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="first_subcategory_ID" not-null="true" />
+            </key>
+            <one-to-many class="hibernate.ProductDetail" />
+        </set>
+    </class>
+</hibernate-mapping>

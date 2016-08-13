@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Aug 13, 2016 2:10:13 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="hibernate.ProductSize" table="product_Size" catalog="iguanast_con" optimistic-lock="version">
+        <id name="productSizeId" type="java.lang.Integer">
+            <column name="product_Size_ID" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="productDetail" class="hibernate.ProductDetail" fetch="select">
+            <column name="product_Detail_ID" not-null="true" />
+        </many-to-one>
+        <property name="sizeType" type="string">
+            <column name="size_type" length="65535" not-null="true" />
+        </property>
+        <set name="sizeStockByColors" table="size_Stock_by_Color" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="product_Size_ID" not-null="true" />
+            </key>
+            <one-to-many class="hibernate.SizeStockByColor" />
+        </set>
+        <set name="carts" table="cart" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="product_Size_ID" not-null="true" />
+            </key>
+            <one-to-many class="hibernate.Cart" />
+        </set>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Aug 13, 2016 2:10:13 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="hibernate.Cart" table="cart" catalog="iguanast_con" optimistic-lock="version">
+        <id name="cartId" type="java.lang.Integer">
+            <column name="cart_ID" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="productSize" class="hibernate.ProductSize" fetch="select">
+            <column name="product_Size_ID" not-null="true" />
+        </many-to-one>
+        <many-to-one name="productByColor" class="hibernate.ProductByColor" fetch="select">
+            <column name="product_by_Color_ID" not-null="true" />
+        </many-to-one>
+        <many-to-one name="user" class="hibernate.User" fetch="select">
+            <column name="user_ID" not-null="true" />
+        </many-to-one>
+        <property name="isCart" type="java.lang.Boolean">
+            <column name="is_cart" />
+        </property>
+        <property name="isWishList" type="java.lang.Boolean">
+            <column name="is_wishList" />
+        </property>
+        <property name="isOrder" type="java.lang.Boolean">
+            <column name="is_order" />
+        </property>
+        <property name="trxId" type="string">
+            <column name="trx_id" length="65535" />
+        </property>
+    </class>
+</hibernate-mapping>
