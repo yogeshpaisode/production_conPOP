@@ -1,0 +1,95 @@
+
+.size_list {
+    background-color: #0b0b0b;
+    color: white;
+    border-radius: 100%;
+    width: 50px;
+    height: 50px;
+}
+.product_color{
+    width: 25px;
+    height:25px;
+}
+
+md-content.md-default-theme, md-content {
+    color: none;
+    background-color: none;
+}
+html.md-default-theme, html, body.md-default-theme, body {
+    color: rgba(0,0,0,0.87);
+    background-color: white;
+}
+.dropdown-toggle{
+    cursor: default;
+}
+
+.logo{
+    width: 90px;
+    margin-top: -27px;
+}
+.navbar-nav>li>.dropdown-menu {
+    margin-top: -14px;
+}
+.men_dropdown {
+    left: -310px;
+    width: 1124px;
+}
+
+.navbar-nav>li>a{
+    font:italic;
+    font-size: 14px;
+    color: black;
+    letter-spacing: .0285714286em;
+    text-transform: uppercase;
+    padding: 0 1.5714285714rem;
+    line-height: 4.5714285714rem;
+}
+.navbar{
+    margin-bottom: 0px;
+    margin-top: -30px;
+    height:50px;
+
+}
+.symbol{
+    font-size: 16px;
+}
+.navbar-nav {
+    margin-left: 140px;
+}
+.nopadding {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+.option{
+    padding-top: 25px;
+}
+.search{
+    padding-top: 14px;
+}
+.nav .open>a, .nav .open>a:hover, .nav .open>a:focus {
+    background-color: transparent;
+    border-color: none;
+}
+
+.pop_card{
+    margin: 0px;
+    box-sizing: border-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.2),0 1px 1px 0 rgba(0,0,0,.14),0 2px 1px -1px rgba(0,0,0,.12);
+    background-color: rgb(255,255,255);
+    border-radius: 2px;
+}
+
+.col-padding{
+    padding-left: 7px;
+    padding-right: 7px;
+}
+
+.row-padding{
+    margin-bottom: 5px;
+}
