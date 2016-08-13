@@ -9,12 +9,38 @@
 <html>
     <%@ include file="/import/dependencies.jsp"%>
     <%@ include file="/import/header.jsp"%>
-    
+    <%@ include file="/import/hibernateConfig.jsp"%>
     <body ng-app="popcon" ng-controller="search as ctrl">
 
 
 
-        <div class="container">
+        <%    
+            JSONSerializer serializer = new JSONSerializer();
+            Criteria cr = hib_session.createCriteria(ProductByColor.class);
+            List results = cr.list();
+            List productBeanList = new ArrayList();
+            for (Object obj : results) {
+                ProductByColor pdc = (ProductByColor) obj;
+                ProductBean bean = new ProductBean();
+                ProductDetail pd = pdc.getProductDetail();
+
+                bean.setDisplayPrice(pd.getDisplayPrice() + "");
+                bean.setFirstSubcategory(pd.getFirstSubcategory().getName());
+                bean.setMainCategory(pd.getMainCategory().getName());
+                bean.setSecondSubcategory(pd.getSecondSubcategory().getName());
+                bean.setProductDetailId(pdc.getProductByColorId());
+                bean.setSearchTag(pd.getSearchTag());
+                bean.setSellingPrice(pd.getSellingPrice() + "");
+                bean.setTitle(pdc.getTitle());
+                productBeanList.add(bean);
+            }
+            String productList=serializer.exclude("*.class").serialize(productBeanList);
+            
+        %>
+
+
+
+        <div class="container" ng-controller="productList">
 
             <div class="row">
                 <div class="col-md-2">
@@ -24,34 +50,6 @@
                                         <md-checkbox aria-label="category 1">
                                             Category 1
                                         </md-checkbox>
-                                        <md-checkbox aria-label="category 1">
-                                            Category 1
-                                        </md-checkbox>
-                                        <md-checkbox aria-label="category 1">
-                                            Category 1
-                                        </md-checkbox>
-                                        <md-checkbox aria-label="category 1">
-                                            Category 1
-                                        </md-checkbox>
-                                        <md-checkbox aria-label="category 1">
-                                            Category 1
-                                        </md-checkbox>
-                                        <md-checkbox aria-label="category 1">
-                                            Category 1
-                                        </md-checkbox>
-                                        <md-checkbox aria-label="category 1">
-                                            Category 1
-                                        </md-checkbox>
-                                        <md-checkbox aria-label="category 1">
-                                            Category 1
-                                        </md-checkbox>
-                                        <md-checkbox aria-label="category 1">
-                                            Category 1
-                                        </md-checkbox>
-                                        <md-checkbox aria-label="category 1">
-                                            Category 1
-                                        </md-checkbox>
-
 
                                         </div>
                                         </md-card>
@@ -62,34 +60,6 @@
                                                             <md-checkbox aria-label="category 1">
                                                                 Category 1
                                                             </md-checkbox>
-                                                            <md-checkbox aria-label="category 1">
-                                                                Category 1
-                                                            </md-checkbox>
-                                                            <md-checkbox aria-label="category 1">
-                                                                Category 1
-                                                            </md-checkbox>
-                                                            <md-checkbox aria-label="category 1">
-                                                                Category 1
-                                                            </md-checkbox>
-                                                            <md-checkbox aria-label="category 1">
-                                                                Category 1
-                                                            </md-checkbox>
-                                                            <md-checkbox aria-label="category 1">
-                                                                Category 1
-                                                            </md-checkbox>
-                                                            <md-checkbox aria-label="category 1">
-                                                                Category 1
-                                                            </md-checkbox>
-                                                            <md-checkbox aria-label="category 1">
-                                                                Category 1
-                                                            </md-checkbox>
-                                                            <md-checkbox aria-label="category 1">
-                                                                Category 1
-                                                            </md-checkbox>
-                                                            <md-checkbox aria-label="category 1">
-                                                                Category 1
-                                                            </md-checkbox>
-
 
                                                             </div>
                                                             </md-card>
@@ -99,34 +69,6 @@
                                                                                 <md-checkbox aria-label="category 1">
                                                                                     Category 1
                                                                                 </md-checkbox>
-                                                                                <md-checkbox aria-label="category 1">
-                                                                                    Category 1
-                                                                                </md-checkbox>
-                                                                                <md-checkbox aria-label="category 1">
-                                                                                    Category 1
-                                                                                </md-checkbox>
-                                                                                <md-checkbox aria-label="category 1">
-                                                                                    Category 1
-                                                                                </md-checkbox>
-                                                                                <md-checkbox aria-label="category 1">
-                                                                                    Category 1
-                                                                                </md-checkbox>
-                                                                                <md-checkbox aria-label="category 1">
-                                                                                    Category 1
-                                                                                </md-checkbox>
-                                                                                <md-checkbox aria-label="category 1">
-                                                                                    Category 1
-                                                                                </md-checkbox>
-                                                                                <md-checkbox aria-label="category 1">
-                                                                                    Category 1
-                                                                                </md-checkbox>
-                                                                                <md-checkbox aria-label="category 1">
-                                                                                    Category 1
-                                                                                </md-checkbox>
-                                                                                <md-checkbox aria-label="category 1">
-                                                                                    Category 1
-                                                                                </md-checkbox>
-
 
                                                                                 </div>
                                                                                 </md-card>
@@ -136,34 +78,7 @@
                                                                                                     <md-checkbox aria-label="category 1">
                                                                                                         Category 1
                                                                                                     </md-checkbox>
-                                                                                                    <md-checkbox aria-label="category 1">
-                                                                                                        Category 1
-                                                                                                    </md-checkbox>
-                                                                                                    <md-checkbox aria-label="category 1">
-                                                                                                        Category 1
-                                                                                                    </md-checkbox>
-                                                                                                    <md-checkbox aria-label="category 1">
-                                                                                                        Category 1
-                                                                                                    </md-checkbox>
-                                                                                                    <md-checkbox aria-label="category 1">
-                                                                                                        Category 1
-                                                                                                    </md-checkbox>
-                                                                                                    <md-checkbox aria-label="category 1">
-                                                                                                        Category 1
-                                                                                                    </md-checkbox>
-                                                                                                    <md-checkbox aria-label="category 1">
-                                                                                                        Category 1
-                                                                                                    </md-checkbox>
-                                                                                                    <md-checkbox aria-label="category 1">
-                                                                                                        Category 1
-                                                                                                    </md-checkbox>
-                                                                                                    <md-checkbox aria-label="category 1">
-                                                                                                        Category 1
-                                                                                                    </md-checkbox>
-                                                                                                    <md-checkbox aria-label="category 1">
-                                                                                                        Category 1
-                                                                                                    </md-checkbox>
-
+                                                                                                   
 
                                                                                                     </div>
                                                                                                     </md-card>
@@ -175,311 +90,14 @@
 
                                                                                                         <div class="row row-padding">
 
-                                                                                                            <div class="col-md-3 col-sm-6 col-xs-12 col-padding">
+
+                                                                                                            <div class="col-md-3 col-sm-6 col-xs-12 col-padding" ng-repeat="p in product_List">
                                                                                                                 <div class="pop_card">
-                                                                                                                    <img src="http://stat.abofcdn.com/stories/2016/July/09-07-2016/CollectionMen/MenCard1_Desktop.jpg" class="md-card-image img-responsive" alt="Washed Out">
+                                                                                                                    <a href="product-view.jsp?id={{p.productDetailId}}">
+                                                                                                                        <img src="http://stat.abofcdn.com/stories/2016/July/09-07-2016/CollectionMen/MenCard1_Desktop.jpg" class="md-card-image img-responsive" alt="Washed Out">
+                                                                                                                    </a>
 
-                                                                                                                    <p style="margin-top: 3px;margin-left: 8px;margin-right: 8px;"><b>What makes Priyanka Chopra 100% WOW on the InStyle cover</b></p>
-
-                                                                                                                    <md-card-actions layout="row" layout-align="center">
-                                                                                                                        <md-button class="md-icon-button" aria-label="Favorite">
-                                                                                                                            <i class="material-icons">shopping_cart</i>
-                                                                                                                        </md-button>
-                                                                                                                        <md-button class="md-icon-button" aria-label="Favorite">
-                                                                                                                            <i class="material-icons">favorite_border</i>
-                                                                                                                        </md-button>
-                                                                                                                        <md-button class="md-icon-button" aria-label="Favorite">
-                                                                                                                            <i class="material-icons">share</i>
-                                                                                                                        </md-button>
-                                                                                                                    </md-card-actions>
-                                                                                                                </div>
-
-                                                                                                            </div><!--End of ./col-->
-                                                                                                            <div class="col-md-3 col-sm-6 col-xs-12 col-padding">
-                                                                                                                <div class="pop_card">
-                                                                                                                    <img src="http://stat.abofcdn.com/stories/2016/July/09-07-2016/CollectionMen/MenCard1_Desktop.jpg" class="md-card-image img-responsive" alt="Washed Out">
-
-                                                                                                                    <p style="margin-top: 3px;margin-left: 8px;margin-right: 8px;"><b>What makes Priyanka Chopra 100% WOW on the InStyle cover</b></p>
-
-                                                                                                                    <md-card-actions layout="row" layout-align="center">
-                                                                                                                        <md-button class="md-icon-button" aria-label="Favorite">
-                                                                                                                            <i class="material-icons">shopping_cart</i>
-                                                                                                                        </md-button>
-                                                                                                                        <md-button class="md-icon-button" aria-label="Favorite">
-                                                                                                                            <i class="material-icons">favorite_border</i>
-                                                                                                                        </md-button>
-                                                                                                                        <md-button class="md-icon-button" aria-label="Favorite">
-                                                                                                                            <i class="material-icons">share</i>
-                                                                                                                        </md-button>
-                                                                                                                    </md-card-actions>
-                                                                                                                </div>
-
-                                                                                                            </div><!--End of ./col-->
-                                                                                                            <div class="col-md-3 col-sm-6 col-xs-12 col-padding">
-                                                                                                                <div class="pop_card">
-                                                                                                                    <img src="http://stat.abofcdn.com/stories/2016/July/09-07-2016/CollectionMen/MenCard1_Desktop.jpg" class="md-card-image img-responsive" alt="Washed Out">
-
-                                                                                                                    <p style="margin-top: 3px;margin-left: 8px;margin-right: 8px;"><b>What makes Priyanka Chopra 100% WOW on the InStyle cover</b></p>
-
-                                                                                                                    <md-card-actions layout="row" layout-align="center">
-                                                                                                                        <md-button class="md-icon-button" aria-label="Favorite">
-                                                                                                                            <i class="material-icons">shopping_cart</i>
-                                                                                                                        </md-button>
-                                                                                                                        <md-button class="md-icon-button" aria-label="Favorite">
-                                                                                                                            <i class="material-icons">favorite_border</i>
-                                                                                                                        </md-button>
-                                                                                                                        <md-button class="md-icon-button" aria-label="Favorite">
-                                                                                                                            <i class="material-icons">share</i>
-                                                                                                                        </md-button>
-                                                                                                                    </md-card-actions>
-                                                                                                                </div>
-
-                                                                                                            </div><!--End of ./col-->
-                                                                                                            <div class="col-md-3 col-sm-6 col-xs-12 col-padding">
-                                                                                                                <div class="pop_card">
-                                                                                                                    <img src="http://stat.abofcdn.com/stories/2016/July/09-07-2016/CollectionMen/MenCard1_Desktop.jpg" class="md-card-image img-responsive" alt="Washed Out">
-
-                                                                                                                    <p style="margin-top: 3px;margin-left: 8px;margin-right: 8px;"><b>What makes Priyanka Chopra 100% WOW on the InStyle cover</b></p>
-
-                                                                                                                    <md-card-actions layout="row" layout-align="center">
-                                                                                                                        <md-button class="md-icon-button" aria-label="Favorite">
-                                                                                                                            <i class="material-icons">shopping_cart</i>
-                                                                                                                        </md-button>
-                                                                                                                        <md-button class="md-icon-button" aria-label="Favorite">
-                                                                                                                            <i class="material-icons">favorite_border</i>
-                                                                                                                        </md-button>
-                                                                                                                        <md-button class="md-icon-button" aria-label="Favorite">
-                                                                                                                            <i class="material-icons">share</i>
-                                                                                                                        </md-button>
-                                                                                                                    </md-card-actions>
-                                                                                                                </div>
-
-                                                                                                            </div><!--End of ./col-->
-                                                                                                            <div class="col-md-3 col-sm-6 col-xs-12 col-padding">
-                                                                                                                <div class="pop_card">
-                                                                                                                    <img src="http://stat.abofcdn.com/stories/2016/July/09-07-2016/CollectionMen/MenCard1_Desktop.jpg" class="md-card-image img-responsive" alt="Washed Out">
-
-                                                                                                                    <p style="margin-top: 3px;margin-left: 8px;margin-right: 8px;"><b>What makes Priyanka Chopra 100% WOW on the InStyle cover</b></p>
-
-                                                                                                                    <md-card-actions layout="row" layout-align="center">
-                                                                                                                        <md-button class="md-icon-button" aria-label="Favorite">
-                                                                                                                            <i class="material-icons">shopping_cart</i>
-                                                                                                                        </md-button>
-                                                                                                                        <md-button class="md-icon-button" aria-label="Favorite">
-                                                                                                                            <i class="material-icons">favorite_border</i>
-                                                                                                                        </md-button>
-                                                                                                                        <md-button class="md-icon-button" aria-label="Favorite">
-                                                                                                                            <i class="material-icons">share</i>
-                                                                                                                        </md-button>
-                                                                                                                    </md-card-actions>
-                                                                                                                </div>
-
-                                                                                                            </div><!--End of ./col-->
-                                                                                                            <div class="col-md-3 col-sm-6 col-xs-12 col-padding">
-                                                                                                                <div class="pop_card">
-                                                                                                                    <img src="http://stat.abofcdn.com/stories/2016/July/09-07-2016/CollectionMen/MenCard1_Desktop.jpg" class="md-card-image img-responsive" alt="Washed Out">
-
-                                                                                                                    <p style="margin-top: 3px;margin-left: 8px;margin-right: 8px;"><b>What makes Priyanka Chopra 100% WOW on the InStyle cover</b></p>
-
-                                                                                                                    <md-card-actions layout="row" layout-align="center">
-                                                                                                                        <md-button class="md-icon-button" aria-label="Favorite">
-                                                                                                                            <i class="material-icons">shopping_cart</i>
-                                                                                                                        </md-button>
-                                                                                                                        <md-button class="md-icon-button" aria-label="Favorite">
-                                                                                                                            <i class="material-icons">favorite_border</i>
-                                                                                                                        </md-button>
-                                                                                                                        <md-button class="md-icon-button" aria-label="Favorite">
-                                                                                                                            <i class="material-icons">share</i>
-                                                                                                                        </md-button>
-                                                                                                                    </md-card-actions>
-                                                                                                                </div>
-
-                                                                                                            </div><!--End of ./col-->
-                                                                                                            <div class="col-md-3 col-sm-6 col-xs-12 col-padding">
-                                                                                                                <div class="pop_card">
-                                                                                                                    <img src="http://stat.abofcdn.com/stories/2016/July/09-07-2016/CollectionMen/MenCard1_Desktop.jpg" class="md-card-image img-responsive" alt="Washed Out">
-
-                                                                                                                    <p style="margin-top: 3px;margin-left: 8px;margin-right: 8px;"><b>What makes Priyanka Chopra 100% WOW on the InStyle cover</b></p>
-
-                                                                                                                    <md-card-actions layout="row" layout-align="center">
-                                                                                                                        <md-button class="md-icon-button" aria-label="Favorite">
-                                                                                                                            <i class="material-icons">shopping_cart</i>
-                                                                                                                        </md-button>
-                                                                                                                        <md-button class="md-icon-button" aria-label="Favorite">
-                                                                                                                            <i class="material-icons">favorite_border</i>
-                                                                                                                        </md-button>
-                                                                                                                        <md-button class="md-icon-button" aria-label="Favorite">
-                                                                                                                            <i class="material-icons">share</i>
-                                                                                                                        </md-button>
-                                                                                                                    </md-card-actions>
-                                                                                                                </div>
-
-                                                                                                            </div><!--End of ./col-->
-                                                                                                            <div class="col-md-3 col-sm-6 col-xs-12 col-padding">
-                                                                                                                <div class="pop_card">
-                                                                                                                    <img src="http://stat.abofcdn.com/stories/2016/July/09-07-2016/CollectionMen/MenCard1_Desktop.jpg" class="md-card-image img-responsive" alt="Washed Out">
-
-                                                                                                                    <p style="margin-top: 3px;margin-left: 8px;margin-right: 8px;"><b>What makes Priyanka Chopra 100% WOW on the InStyle cover</b></p>
-
-                                                                                                                    <md-card-actions layout="row" layout-align="center">
-                                                                                                                        <md-button class="md-icon-button" aria-label="Favorite">
-                                                                                                                            <i class="material-icons">shopping_cart</i>
-                                                                                                                        </md-button>
-                                                                                                                        <md-button class="md-icon-button" aria-label="Favorite">
-                                                                                                                            <i class="material-icons">favorite_border</i>
-                                                                                                                        </md-button>
-                                                                                                                        <md-button class="md-icon-button" aria-label="Favorite">
-                                                                                                                            <i class="material-icons">share</i>
-                                                                                                                        </md-button>
-                                                                                                                    </md-card-actions>
-                                                                                                                </div>
-
-                                                                                                            </div><!--End of ./col-->
-                                                                                                            <div class="col-md-3 col-sm-6 col-xs-12 col-padding">
-                                                                                                                <div class="pop_card">
-                                                                                                                    <img src="http://stat.abofcdn.com/stories/2016/July/09-07-2016/CollectionMen/MenCard1_Desktop.jpg" class="md-card-image img-responsive" alt="Washed Out">
-
-                                                                                                                    <p style="margin-top: 3px;margin-left: 8px;margin-right: 8px;"><b>What makes Priyanka Chopra 100% WOW on the InStyle cover</b></p>
-
-                                                                                                                    <md-card-actions layout="row" layout-align="center">
-                                                                                                                        <md-button class="md-icon-button" aria-label="Favorite">
-                                                                                                                            <i class="material-icons">shopping_cart</i>
-                                                                                                                        </md-button>
-                                                                                                                        <md-button class="md-icon-button" aria-label="Favorite">
-                                                                                                                            <i class="material-icons">favorite_border</i>
-                                                                                                                        </md-button>
-                                                                                                                        <md-button class="md-icon-button" aria-label="Favorite">
-                                                                                                                            <i class="material-icons">share</i>
-                                                                                                                        </md-button>
-                                                                                                                    </md-card-actions>
-                                                                                                                </div>
-
-                                                                                                            </div><!--End of ./col-->
-                                                                                                            <div class="col-md-3 col-sm-6 col-xs-12 col-padding">
-                                                                                                                <div class="pop_card">
-                                                                                                                    <img src="http://stat.abofcdn.com/stories/2016/July/09-07-2016/CollectionMen/MenCard1_Desktop.jpg" class="md-card-image img-responsive" alt="Washed Out">
-
-                                                                                                                    <p style="margin-top: 3px;margin-left: 8px;margin-right: 8px;"><b>What makes Priyanka Chopra 100% WOW on the InStyle cover</b></p>
-
-                                                                                                                    <md-card-actions layout="row" layout-align="center">
-                                                                                                                        <md-button class="md-icon-button" aria-label="Favorite">
-                                                                                                                            <i class="material-icons">shopping_cart</i>
-                                                                                                                        </md-button>
-                                                                                                                        <md-button class="md-icon-button" aria-label="Favorite">
-                                                                                                                            <i class="material-icons">favorite_border</i>
-                                                                                                                        </md-button>
-                                                                                                                        <md-button class="md-icon-button" aria-label="Favorite">
-                                                                                                                            <i class="material-icons">share</i>
-                                                                                                                        </md-button>
-                                                                                                                    </md-card-actions>
-                                                                                                                </div>
-
-                                                                                                            </div><!--End of ./col-->
-                                                                                                            <div class="col-md-3 col-sm-6 col-xs-12 col-padding">
-                                                                                                                <div class="pop_card">
-                                                                                                                    <img src="http://stat.abofcdn.com/stories/2016/July/09-07-2016/CollectionMen/MenCard1_Desktop.jpg" class="md-card-image img-responsive" alt="Washed Out">
-
-                                                                                                                    <p style="margin-top: 3px;margin-left: 8px;margin-right: 8px;"><b>What makes Priyanka Chopra 100% WOW on the InStyle cover</b></p>
-
-                                                                                                                    <md-card-actions layout="row" layout-align="center">
-                                                                                                                        <md-button class="md-icon-button" aria-label="Favorite">
-                                                                                                                            <i class="material-icons">shopping_cart</i>
-                                                                                                                        </md-button>
-                                                                                                                        <md-button class="md-icon-button" aria-label="Favorite">
-                                                                                                                            <i class="material-icons">favorite_border</i>
-                                                                                                                        </md-button>
-                                                                                                                        <md-button class="md-icon-button" aria-label="Favorite">
-                                                                                                                            <i class="material-icons">share</i>
-                                                                                                                        </md-button>
-                                                                                                                    </md-card-actions>
-                                                                                                                </div>
-
-                                                                                                            </div><!--End of ./col-->
-                                                                                                            <div class="col-md-3 col-sm-6 col-xs-12 col-padding">
-                                                                                                                <div class="pop_card">
-                                                                                                                    <img src="http://stat.abofcdn.com/stories/2016/July/09-07-2016/CollectionMen/MenCard1_Desktop.jpg" class="md-card-image img-responsive" alt="Washed Out">
-
-                                                                                                                    <p style="margin-top: 3px;margin-left: 8px;margin-right: 8px;"><b>What makes Priyanka Chopra 100% WOW on the InStyle cover</b></p>
-
-                                                                                                                    <md-card-actions layout="row" layout-align="center">
-                                                                                                                        <md-button class="md-icon-button" aria-label="Favorite">
-                                                                                                                            <i class="material-icons">shopping_cart</i>
-                                                                                                                        </md-button>
-                                                                                                                        <md-button class="md-icon-button" aria-label="Favorite">
-                                                                                                                            <i class="material-icons">favorite_border</i>
-                                                                                                                        </md-button>
-                                                                                                                        <md-button class="md-icon-button" aria-label="Favorite">
-                                                                                                                            <i class="material-icons">share</i>
-                                                                                                                        </md-button>
-                                                                                                                    </md-card-actions>
-                                                                                                                </div>
-
-                                                                                                            </div><!--End of ./col-->
-                                                                                                            <div class="col-md-3 col-sm-6 col-xs-12 col-padding">
-                                                                                                                <div class="pop_card">
-                                                                                                                    <img src="http://stat.abofcdn.com/stories/2016/July/09-07-2016/CollectionMen/MenCard1_Desktop.jpg" class="md-card-image img-responsive" alt="Washed Out">
-
-                                                                                                                    <p style="margin-top: 3px;margin-left: 8px;margin-right: 8px;"><b>What makes Priyanka Chopra 100% WOW on the InStyle cover</b></p>
-
-                                                                                                                    <md-card-actions layout="row" layout-align="center">
-                                                                                                                        <md-button class="md-icon-button" aria-label="Favorite">
-                                                                                                                            <i class="material-icons">shopping_cart</i>
-                                                                                                                        </md-button>
-                                                                                                                        <md-button class="md-icon-button" aria-label="Favorite">
-                                                                                                                            <i class="material-icons">favorite_border</i>
-                                                                                                                        </md-button>
-                                                                                                                        <md-button class="md-icon-button" aria-label="Favorite">
-                                                                                                                            <i class="material-icons">share</i>
-                                                                                                                        </md-button>
-                                                                                                                    </md-card-actions>
-                                                                                                                </div>
-
-                                                                                                            </div><!--End of ./col-->
-                                                                                                            <div class="col-md-3 col-sm-6 col-xs-12 col-padding">
-                                                                                                                <div class="pop_card">
-                                                                                                                    <img src="http://stat.abofcdn.com/stories/2016/July/09-07-2016/CollectionMen/MenCard1_Desktop.jpg" class="md-card-image img-responsive" alt="Washed Out">
-
-                                                                                                                    <p style="margin-top: 3px;margin-left: 8px;margin-right: 8px;"><b>What makes Priyanka Chopra 100% WOW on the InStyle cover</b></p>
-
-                                                                                                                    <md-card-actions layout="row" layout-align="center">
-                                                                                                                        <md-button class="md-icon-button" aria-label="Favorite">
-                                                                                                                            <i class="material-icons">shopping_cart</i>
-                                                                                                                        </md-button>
-                                                                                                                        <md-button class="md-icon-button" aria-label="Favorite">
-                                                                                                                            <i class="material-icons">favorite_border</i>
-                                                                                                                        </md-button>
-                                                                                                                        <md-button class="md-icon-button" aria-label="Favorite">
-                                                                                                                            <i class="material-icons">share</i>
-                                                                                                                        </md-button>
-                                                                                                                    </md-card-actions>
-                                                                                                                </div>
-
-                                                                                                            </div><!--End of ./col-->
-                                                                                                            <div class="col-md-3 col-sm-6 col-xs-12 col-padding">
-                                                                                                                <div class="pop_card">
-                                                                                                                    <img src="http://stat.abofcdn.com/stories/2016/July/09-07-2016/CollectionMen/MenCard1_Desktop.jpg" class="md-card-image img-responsive" alt="Washed Out">
-
-                                                                                                                    <p style="margin-top: 3px;margin-left: 8px;margin-right: 8px;"><b>What makes Priyanka Chopra 100% WOW on the InStyle cover</b></p>
-
-                                                                                                                    <md-card-actions layout="row" layout-align="center">
-                                                                                                                        <md-button class="md-icon-button" aria-label="Favorite">
-                                                                                                                            <i class="material-icons">shopping_cart</i>
-                                                                                                                        </md-button>
-                                                                                                                        <md-button class="md-icon-button" aria-label="Favorite">
-                                                                                                                            <i class="material-icons">favorite_border</i>
-                                                                                                                        </md-button>
-                                                                                                                        <md-button class="md-icon-button" aria-label="Favorite">
-                                                                                                                            <i class="material-icons">share</i>
-                                                                                                                        </md-button>
-                                                                                                                    </md-card-actions>
-                                                                                                                </div>
-
-                                                                                                            </div><!--End of ./col-->
-                                                                                                            <div class="col-md-3 col-sm-6 col-xs-12 col-padding">
-                                                                                                                <div class="pop_card">
-                                                                                                                    <img src="http://stat.abofcdn.com/stories/2016/July/09-07-2016/CollectionMen/MenCard1_Desktop.jpg" class="md-card-image img-responsive" alt="Washed Out">
-
-                                                                                                                    <p style="margin-top: 3px;margin-left: 8px;margin-right: 8px;"><b>What makes Priyanka Chopra 100% WOW on the InStyle cover</b></p>
+                                                                                                                    <p style="margin-top: 3px;margin-left: 8px;margin-right: 8px;"><b>{{p.title}}</b></p>
 
                                                                                                                     <md-card-actions layout="row" layout-align="center">
                                                                                                                         <md-button class="md-icon-button" aria-label="Favorite">
@@ -508,6 +126,12 @@
 
 
                                                                                                     </div><!--End of container-->
+                                                                                                    
+                                                                                                    <script>
+                                                                                                                app.controller("productList",function ($scope){
+                                                                                                                    $scope.product_List=<%= productList%>;
+                                                                                                                });
+                                                                                                    </script>
 
 
                                                                                                     </body>

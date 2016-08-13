@@ -17,6 +17,7 @@ public class ProductBean {
     private String searchTag;
     private String sellingPrice;
     private String displayPrice;
+    private String title;
 
     public int getProductDetailId() {
         return productDetailId;
@@ -72,5 +73,13 @@ public class ProductBean {
 
     public void setDisplayPrice(String displayPrice) {
         this.displayPrice = displayPrice;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

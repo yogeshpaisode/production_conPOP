@@ -1,3 +1,5 @@
+<%@page import="org.hibernate.criterion.Restrictions"%>
+<%@page import="bean.ProductBean"%>
 <%-- 
     Document   : product-list
     Created on : Aug 13, 2016, 12:43:00 PM
@@ -9,7 +11,17 @@
 <html>
     <%@ include file="/import/dependencies.jsp"%>
     <%@ include file="/import/header.jsp"%>
-    <body ng-app="popcon" ng-controller="search as ctrl">
+    <%@ include file="/import/hibernateConfig.jsp"%>
+    <%        
+        int id = Integer.parseInt(request.getParameter("id"));
+        //int id=1;
+        Criteria cr = hib_session.createCriteria(ProductByColor.class);
+        cr.add(Restrictions.eq("productByColorId", id));
+        ProductByColor pdc=(ProductByColor)cr.list().get(0);
+        ProductDetail pd=pdc.getProductDetail();
+        
+    %>
+    <body ng-app="popcon"ng-controller="search as ctrl">
 
 
         <div class="container">
@@ -18,10 +30,10 @@
 
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <ol class="breadcrumb">
-                        <li><a href="#">Men</a></li>
-                        <li><a href="#">Trending-brands</a></li>
-                        <li><a href="#">Puma</a></li>
-                        <li class="active">Puma Men ESS Dark Grey Melange Regular Fit T-shirt</li>
+                        <li><a href="#"><%= pd.getMainCategory().getName() %></a></li>
+                        <li><a href="#"><%= pd.getFirstSubcategory().getName() %></a></li>
+                        <li><a href="#"><%= pd.getSecondSubcategory().getName() %></a></li>
+                        <li class="active"><%= pdc.getTitle() %></li>
                     </ol>
                 </div>
 
@@ -54,7 +66,7 @@
 
                         <div class="col-md-12" style="margin-left: 15px;">
                             <h4>
-                                Puma Men ESS Dark Grey Melange Regular Fit T-shirt
+                                <%= pdc.getTitle() %>
                             </h4>
                         </div>
 

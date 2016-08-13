@@ -2,9 +2,8 @@
 <%@page import="bean.ProductBean"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
-<%@page import="hibernate.ProductDetail"%>
+<%@page import="hibernate.*"%>
 <%@page import="org.hibernate.Criteria"%>
-<%@ include file="/import/hibernateConfig.jsp"%>
 <section>
     <div class="row">
         <div class="col-md-12">
@@ -746,27 +745,6 @@
 </section>
 
 
-<%
-    JSONSerializer serializer = new JSONSerializer();
-    Criteria cr = hib_session.createCriteria(ProductDetail.class);
-    List results = cr.list();
-    List productBeanList=new ArrayList();
-    for (Object obj : results) {
-        ProductDetail pd = (ProductDetail) obj;
-        ProductBean bean=new ProductBean();
-        
-        bean.setDisplayPrice(pd.getDisplayPrice()+"");
-        bean.setFirstSubcategory(pd.getFirstSubcategory().getName());
-        bean.setMainCategory(pd.getMainCategory().getName());
-        bean.setSecondSubcategory(pd.getSecondSubcategory().getName());
-        bean.setProductDetailId(pd.getProductDetailId());
-        bean.setSearchTag(pd.getSearchTag());
-        bean.setSellingPrice(pd.getSellingPrice()+"");
-        
-        productBeanList.add(bean);
-    }
-%>
-
 <script>
     var navbar = $(".navbar").width();
     $(".dropdown-menu").css({"width": navbar - 5});
@@ -777,99 +755,93 @@
         $(".dropdown-menu").css({"width": navbar - 5});
     });
 
-
-    (function () {
-        'use strict';
-        angular
-                .module('popcon', ['ngMaterial'])
-                .controller('search', DemoCtrl);
-        function DemoCtrl($timeout, $q, $log) {
-            var self = this;
-            self.productList=<%= serializer.exclude("*.class").serialize(productBeanList)%>;
-            self.simulateQuery = false;
-            self.isDisabled = false;
-            self.repos = loadAll();
-            self.querySearch = querySearch;
-            self.selectedItemChange = selectedItemChange;
-            self.searchTextChange = searchTextChange;
-            // ******************************
-            // Internal methods
-            // ******************************
-            /**
-             * Search for repos... use $timeout to simulate
-             * remote dataservice call.
-             */
-            function querySearch(query) {
-                var results = query ? self.repos.filter(createFilterFor(query)) : self.repos,
-                        deferred;
-                if (self.simulateQuery) {
-                    deferred = $q.defer();
-                    $timeout(function () {
-                        deferred.resolve(results);
-                    }, Math.random() * 1000, false);
-                    return deferred.promise;
-                } else {
-                    return results;
-                }
-            }
-            function searchTextChange(text) {
-                $log.info('Text changed to ' + text);
-            }
-            function selectedItemChange(item) {
-                $log.info('Item changed to ' + JSON.stringify(item));
-            }
-            /**
-             * Build `components` list of key/value pairs
-             */
-            function loadAll() {
-                var repos = [
-                    {
-                        'name': 'Angular 1',
-                        'url': 'https://github.com/angular/angular.js',
-                        'watchers': '3,623',
-                        'forks': '16,175',
-                    },
-                    {
-                        'name': 'Angular 2',
-                        'url': 'https://github.com/angular/angular',
-                        'watchers': '469',
-                        'forks': '760',
-                    },
-                    {
-                        'name': 'Angular Material',
-                        'url': 'https://github.com/angular/material',
-                        'watchers': '727',
-                        'forks': '1,241',
-                    },
-                    {
-                        'name': 'Bower Material',
-                        'url': 'https://github.com/angular/bower-material',
-                        'watchers': '42',
-                        'forks': '84',
-                    },
-                    {
-                        'name': 'Material Start',
-                        'url': 'https://github.com/angular/material-start',
-                        'watchers': '81',
-                        'forks': '303',
-                    }
-                ];
-                return repos.map(function (repo) {
-                    repo.value = repo.name.toLowerCase();
-                    return repo;
-                });
-            }
-            /**
-             * Create filter function for a query string
-             */
-            function createFilterFor(query) {
-                var lowercaseQuery = angular.lowercase(query);
-                return function filterFn(item) {
-                    return (item.value.indexOf(lowercaseQuery) === 0);
-                };
+    var app = angular.module('popcon', ['ngMaterial'])
+    app.controller('search', DemoCtrl);
+    function DemoCtrl($timeout, $q, $log) {
+        var self = this;
+        self.simulateQuery = false;
+        self.isDisabled = false;
+        self.repos = loadAll();
+        self.querySearch = querySearch;
+        self.selectedItemChange = selectedItemChange;
+        self.searchTextChange = searchTextChange;
+        // ******************************
+        // Internal methods
+        // ******************************
+        /**
+         * Search for repos... use $timeout to simulate
+         * remote dataservice call.
+         */
+        function querySearch(query) {
+            var results = query ? self.repos.filter(createFilterFor(query)) : self.repos,
+                    deferred;
+            if (self.simulateQuery) {
+                deferred = $q.defer();
+                $timeout(function () {
+                    deferred.resolve(results);
+                }, Math.random() * 1000, false);
+                return deferred.promise;
+            } else {
+                return results;
             }
         }
-    })();
+        function searchTextChange(text) {
+            $log.info('Text changed to ' + text);
+        }
+        function selectedItemChange(item) {
+            $log.info('Item changed to ' + JSON.stringify(item));
+        }
+        /**
+         * Build `components` list of key/value pairs
+         */
+        function loadAll() {
+            var repos = [
+                {
+                    'name': 'Angular 1',
+                    'url': 'https://github.com/angular/angular.js',
+                    'watchers': '3,623',
+                    'forks': '16,175',
+                },
+                {
+                    'name': 'Angular 2',
+                    'url': 'https://github.com/angular/angular',
+                    'watchers': '469',
+                    'forks': '760',
+                },
+                {
+                    'name': 'Angular Material',
+                    'url': 'https://github.com/angular/material',
+                    'watchers': '727',
+                    'forks': '1,241',
+                },
+                {
+                    'name': 'Bower Material',
+                    'url': 'https://github.com/angular/bower-material',
+                    'watchers': '42',
+                    'forks': '84',
+                },
+                {
+                    'name': 'Material Start',
+                    'url': 'https://github.com/angular/material-start',
+                    'watchers': '81',
+                    'forks': '303',
+                }
+            ];
+            return repos.map(function (repo) {
+                repo.value = repo.name.toLowerCase();
+                return repo;
+            });
+        }
+        /**
+         * Create filter function for a query string
+         */
+        function createFilterFor(query) {
+            var lowercaseQuery = angular.lowercase(query);
+            return function filterFn(item) {
+                return (item.value.indexOf(lowercaseQuery) === 0);
+            };
+        }
+    }
 
     $(function () {
         $(".dropdown").hover(
