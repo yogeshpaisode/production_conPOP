@@ -1,3 +1,10 @@
+<%@page import="flexjson.JSONSerializer"%>
+<%@page import="bean.ProductBean"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
+<%@page import="hibernate.ProductDetail"%>
+<%@page import="org.hibernate.Criteria"%>
+<%@ include file="/import/hibernateConfig.jsp"%>
 <section>
     <div class="row">
         <div class="col-md-12">
@@ -7,7 +14,7 @@
 
                     <div class=" col-md-offset-2 col-md-6 text-left hidden-sm hidden-xs" style="padding-right: 0px;">
 
-                        <div ng-controller="search as ctrl" class="search" ng-cloak>
+                        <div class="search" ng-cloak>
                             <form ng-submit="$event.preventDefault()">
                                 <md-autocomplete
                                     ng-disabled="ctrl.isDisabled"
@@ -739,6 +746,26 @@
 </section>
 
 
+<%
+    JSONSerializer serializer = new JSONSerializer();
+    Criteria cr = hib_session.createCriteria(ProductDetail.class);
+    List results = cr.list();
+    List productBeanList=new ArrayList();
+    for (Object obj : results) {
+        ProductDetail pd = (ProductDetail) obj;
+        ProductBean bean=new ProductBean();
+        
+        bean.setDisplayPrice(pd.getDisplayPrice()+"");
+        bean.setFirstSubcategory(pd.getFirstSubcategory().getName());
+        bean.setMainCategory(pd.getMainCategory().getName());
+        bean.setSecondSubcategory(pd.getSecondSubcategory().getName());
+        bean.setProductDetailId(pd.getProductDetailId());
+        bean.setSearchTag(pd.getSearchTag());
+        bean.setSellingPrice(pd.getSellingPrice()+"");
+        
+        productBeanList.add(bean);
+    }
+%>
 
 <script>
     var navbar = $(".navbar").width();
@@ -758,6 +785,7 @@
                 .controller('search', DemoCtrl);
         function DemoCtrl($timeout, $q, $log) {
             var self = this;
+            self.productList=<%= serializer.exclude("*.class").serialize(productBeanList)%>;
             self.simulateQuery = false;
             self.isDisabled = false;
             self.repos = loadAll();

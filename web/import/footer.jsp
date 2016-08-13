@@ -1,0 +1,3 @@
+<%
+    hib_session.close();
+%>

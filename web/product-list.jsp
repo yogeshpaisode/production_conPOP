@@ -9,7 +9,8 @@
 <html>
     <%@ include file="/import/dependencies.jsp"%>
     <%@ include file="/import/header.jsp"%>
-    <body ng-app="popcon">
+    
+    <body ng-app="popcon" ng-controller="search as ctrl">
 
 
 
@@ -511,3 +512,5 @@
 
                                                                                                     </body>
                                                                                                     </html>
+
+                                                                                                    <%@ include file="/import/footer.jsp"%>
