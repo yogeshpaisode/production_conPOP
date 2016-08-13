@@ -12,7 +12,11 @@
     <%@ include file="/import/dependencies.jsp"%>
     <%@ include file="/import/header.jsp"%>
     <%@ include file="/import/hibernateConfig.jsp"%>
-    <%        int id = Integer.parseInt(request.getParameter("id"));
+    <%        
+        int id = Integer.parseInt(request.getParameter("id"));
+        session.setAttribute("productByColorID", id);
+        session.setAttribute("lastPage", "cart");
+        
         //int id=1;
         Criteria cr = hib_session.createCriteria(ProductByColor.class);
         cr.add(Restrictions.eq("productByColorId", id));
@@ -137,7 +141,9 @@
                             </div><!--End of Col-->
 
                             <div class="col-md-4 col-sm-4 nopadding">
-                                <md-button class="md-raised md-primary" style="width: 80%;">Add To Cart</md-button>
+                                <a href="addToCartAction.jsp?size=2">  
+                                    <md-button class="md-raised md-primary" style="width: 80%;">Add To Cart</md-button>
+                                </a>
                             </div><!--End of Col-->
 
                         </div>
