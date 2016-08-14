@@ -17,7 +17,7 @@
         if(lastPage.equals("cart")){
             response.sendRedirect("addToCartAction.jsp");
         }else{
-            response.sendRedirect("profile.jsp");
+            response.sendRedirect(lastPage);
         }
     }else{
         

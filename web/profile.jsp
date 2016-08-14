@@ -1,3 +1,11 @@
+<%
+    try {
+        session.getAttribute("isLoggedIn").toString();
+    } catch (Exception e) {
+        response.sendRedirect("auth.jsp");
+    }
+        session.setAttribute("lastPage", "profile.jsp");
+%>
 <%-- 
     Document   : product-list
     Created on : Aug 13, 2016, 12:43:00 PM
@@ -11,10 +19,8 @@
     <%@ include file="/import/header.jsp"%>
     <%@page import="hibernate.*"%>
     <%@ include file="/import/hibernateConfig.jsp"%>
+    <%@ include file="/import/checkValidUser.jsp"%>
     <body ng-app="popcon" ng-controller="search as ctrl" class="container">
-
-
-
         <div ng-cloak>
             <md-content>
                 <md-tabs md-dynamic-height md-border-bottom>

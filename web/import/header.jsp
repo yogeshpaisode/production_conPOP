@@ -4,6 +4,7 @@
 <%@page import="java.util.List"%>
 <%@page import="hibernate.*"%>
 <%@page import="org.hibernate.Criteria"%>
+
 <section>
     <div class="row">
         <div class="col-md-12">
@@ -722,7 +723,7 @@
                                 </li>
                             </ul>
                             <ul class="nav navbar-nav navbar-right">
-                                <li><a href="#"><span><i class="fa fa-user" aria-hidden="true"></i> MY Account</span></a></li>
+                                <li><a href="profile.jsp"><span><i class="fa fa-user" aria-hidden="true"></i> MY Account</span></a></li>
                             </ul>
                         </div><!-- /.navbar-collapse -->
                     </div><!-- /.container-fluid -->

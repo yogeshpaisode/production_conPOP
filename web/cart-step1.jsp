@@ -1,3 +1,11 @@
+<%
+    try {
+        session.getAttribute("isLoggedIn").toString();
+    } catch (Exception e) {
+        response.sendRedirect("auth.jsp");
+    }
+        session.setAttribute("lastPage", "cart-step1.jsp");
+%>
 <%-- 
     Document   : product-list
     Created on : Aug 13, 2016, 12:43:00 PM
