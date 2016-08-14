@@ -46,6 +46,7 @@
         cr = hib_session.createCriteria(Cart.class);
         cr.add(Restrictions.eq("productByColor", pbc));
         cr.add(Restrictions.eq("user", user));
+        cr.add(Restrictions.eq("isCart", true));
         List orderList = cr.list();
 
         if (orderList.size() <= 0) {
@@ -53,7 +54,7 @@
             hib_session.save(cart);
             transaction.commit();
         }
-        response.sendRedirect("cart.jsp");
+        response.sendRedirect("cart-step1.jsp");
     } catch (Exception e) {
         //out.print("Err<br>" + e + "<br>" + size + "mm<br>" + session.getAttribute("isLoggedIn").toString());
         response.sendRedirect("auth.jsp");
