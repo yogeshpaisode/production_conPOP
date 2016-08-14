@@ -46,14 +46,9 @@
                         </div>
 
                     </div>
-                    <div class="col-md-1 col-sm-3 text-right nopadding option text-right">
+                    <div class="col-md-2 col-sm-6 text-right nopadding option text-right">
                         <div class="option" style="margin-right: -40px;">
                             <span style=""><i class="fa fa-truck" aria-hidden="true"></i> TRACK ORDER</span>
-                        </div>
-                    </div>
-                    <div class="col-md-1 col-sm-3  text-right nopadding option text-right">
-                        <div class="option" style="margin-right: -50px;">
-                            <span><i class="fa fa-user" aria-hidden="true"></i> MY Account</span>
                         </div>
                     </div>
                     <div class="col-md-1 col-sm-3 text-right nopadding option">
@@ -725,6 +720,9 @@
 
                                     </div>
                                 </li>
+                            </ul>
+                            <ul class="nav navbar-nav navbar-right">
+                                <li><a href="#"><span><i class="fa fa-user" aria-hidden="true"></i> MY Account</span></a></li>
                             </ul>
                         </div><!-- /.navbar-collapse -->
                     </div><!-- /.container-fluid -->
