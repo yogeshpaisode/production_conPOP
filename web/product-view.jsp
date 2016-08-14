@@ -12,11 +12,10 @@
     <%@ include file="/import/dependencies.jsp"%>
     <%@ include file="/import/header.jsp"%>
     <%@ include file="/import/hibernateConfig.jsp"%>
-    <%        
-        int id = Integer.parseInt(request.getParameter("id"));
+    <%        int id = Integer.parseInt(request.getParameter("id"));
         session.setAttribute("productByColorID", id);
         session.setAttribute("lastPage", "cart");
-        
+
         //int id=1;
         Criteria cr = hib_session.createCriteria(ProductByColor.class);
         cr.add(Restrictions.eq("productByColorId", id));
@@ -112,20 +111,20 @@
                         <div class="col-md-12">
 
                             <div class="row">
-                                
-                                 <%
+
+                                <%
                                     for (Object o : size) {
-                                        ProductSize s=(ProductSize)o;
+                                        ProductSize s = (ProductSize) o;
                                 %>
-                                
+
                                 <div class="col-md-1 col-sm-1">
                                     <md-button class="md-fab md-mini md-primary">
-                                        <b><%= s.getSizeType() %></b>
+                                        <b><%= s.getSizeType()%></b>
                                     </md-button>
                                 </div>
 
                                 <%}%>
-                                
+
                             </div>
                         </div><!--End of Col-->
 
@@ -141,7 +140,7 @@
                             </div><!--End of Col-->
 
                             <div class="col-md-4 col-sm-4 nopadding">
-                                <a href="addToCartAction.jsp?size=2">  
+                                <a href="addToCartAction.jsp?size=2&type=cart">  
                                     <md-button class="md-raised md-primary" style="width: 80%;">Add To Cart</md-button>
                                 </a>
                             </div><!--End of Col-->
@@ -149,7 +148,9 @@
                         </div>
 
                         <div class="col-md-4 col-sm-3">
-                            <md-button><i class="fa fa-heart" aria-hidden="true"></i> Add to Wish List</md-button>
+                            <a href="addToCartAction.jsp?size=2&type=wishlist">
+                                <md-button><i class="fa fa-heart" aria-hidden="true"></i> Add to Wish List</md-button>
+                            </a>
                         </div><!--End of Col-->
 
                         <div class="col-md-4 col-sm-4">

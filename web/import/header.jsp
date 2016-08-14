@@ -1,9 +1,38 @@
+<%@page import="org.hibernate.criterion.Restrictions"%>
+<%@page import="org.hibernate.Session"%>
+<%@page import="org.hibernate.SessionFactory"%>
 <%@page import="flexjson.JSONSerializer"%>
 <%@page import="bean.ProductBean"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@page import="hibernate.*"%>
 <%@page import="org.hibernate.Criteria"%>
+
+<%
+    int cart = 0;
+    int wishlist = 0;
+    try {
+        session.getAttribute("isLoggedIn").toString();
+        User user = (User) session.getAttribute("User");
+        SessionFactory sessionFactory = hibernate.HibernateUtil.getSessionFactory();
+        Session head_session = sessionFactory.openSession();
+        Criteria c = head_session.createCriteria(Cart.class);
+        c.add(Restrictions.eq("user", user));
+
+        for (Object o : c.list()) {
+            Cart ca = (Cart) o;
+            if (ca.getIsCart()) {
+                cart++;
+            } else if (ca.getIsWishList()) {
+                wishlist++;
+            }
+        }
+
+        head_session.close();
+
+    } catch (Exception e) {
+    }
+%>
 
 <section>
     <div class="row">
@@ -49,17 +78,24 @@
                     </div>
                     <div class="col-md-2 col-sm-6 text-right nopadding option text-right">
                         <div class="option" style="margin-right: -40px;">
-                            <span style=""><i class="fa fa-truck" aria-hidden="true"></i> TRACK ORDER</span>
+                            <a href="trackOrder.jsp">
+                                <span style=""><i class="fa fa-truck" aria-hidden="true"></i> TRACK ORDER</span>
+                            </a>
                         </div>
                     </div>
                     <div class="col-md-1 col-sm-3 text-right nopadding option">
                         <div class="option">
-                            <div class="material-icons mdl-badge mdl-badge--overlap" data-badge="0">favorite</div>
+                            <a href="wishList.jsp">
+                                <div class="material-icons mdl-badge mdl-badge--overlap" data-badge="<%= wishlist %>">favorite</div>
+                            </a>
                         </div>
                     </div>
                     <div class="col-md-1 col-sm-3 nopadding">
                         <div class="option">
-                            &nbsp;&nbsp;<div class="material-icons mdl-badge mdl-badge--overlap" data-badge="0">shopping_cart</div>
+                            &nbsp;&nbsp;
+                            <a href="cart-step1.jsp">
+                                <div class="material-icons mdl-badge mdl-badge--overlap" data-badge="<%= cart %>">shopping_cart</div>
+                            </a>
                         </div>
                     </div>
 
