@@ -11,9 +11,11 @@
 <%
     int cart = 0;
     int wishlist = 0;
+    String headerMessage="MY ACCOUNT";
     try {
         session.getAttribute("isLoggedIn").toString();
         User user = (User) session.getAttribute("User");
+        headerMessage="Hii "+user.getFirstName();
         SessionFactory sessionFactory = hibernate.HibernateUtil.getSessionFactory();
         Session head_session = sessionFactory.openSession();
         Criteria c = head_session.createCriteria(Cart.class);
@@ -759,7 +761,7 @@
                                 </li>
                             </ul>
                             <ul class="nav navbar-nav navbar-right">
-                                <li><a href="profile.jsp"><span><i class="fa fa-user" aria-hidden="true"></i> MY Account</span></a></li>
+                                <li><a href="profile.jsp"><span><i class="fa fa-user" aria-hidden="true"></i> <%= headerMessage%></span></a></li>
                             </ul>
                         </div><!-- /.navbar-collapse -->
                     </div><!-- /.container-fluid -->
