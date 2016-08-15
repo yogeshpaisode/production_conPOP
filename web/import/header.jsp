@@ -35,7 +35,7 @@
     }
 %>
 
-<section>
+<section class="hidden-xs">
     <div class="row">
         <div class="col-md-12">
             <div class="container">
@@ -107,7 +107,7 @@
 
     <div class="row">
         <div class="col-md-12">
-            <hr style="margin-top: 0px;">
+            <hr style="margin-top: 0px;visibility: hidden;">
         </div>
     </div><!--End of Row-->
 
@@ -134,10 +134,10 @@
                                 <%
                                     Criteria drop_cr = head_session.createCriteria(MainCategory.class);
                                     List mainCategoryList = drop_cr.list();
-                                    int left=60;
+                                    int left = 60;
                                     for (Object o : mainCategoryList) {
                                         MainCategory mc = (MainCategory) o;
-                                        left+=90;
+                                        left += 90;
                                 %>
 
 
@@ -168,19 +168,19 @@
 
                                                         <ul>
                                                             <li role="separator" class="divider"></li>
-                                                            <li><a href="product-list.jsp?fscID=<%= fsc.getFirstSubcategoryId() %>&sscID=na"><%= fsc.getName()%></a></li>
+                                                            <li><a href="product-list.jsp?fscID=<%= fsc.getFirstSubcategoryId()%>&sscID=na"><%= fsc.getName()%></a></li>
                                                             <li role="separator" class="divider"></li>
 
                                                             <%
                                                                 Criteria ssc_c = head_session.createCriteria(SecondSubcategory.class);
                                                                 ssc_c.add(Restrictions.eq("firstSubcategory", fsc));
 
-                                                                for (Object ssc_o:ssc_c.list()) {
-                                                                    SecondSubcategory ssc=(SecondSubcategory)ssc_o;
+                                                                for (Object ssc_o : ssc_c.list()) {
+                                                                    SecondSubcategory ssc = (SecondSubcategory) ssc_o;
                                                             %>
 
 
-                                                            <li><a href="product-list.jsp?fscID=<%= fsc.getFirstSubcategoryId() %>&sscID=<%= ssc.getSecondSubcategoryId() %>"><%= ssc.getName() %></a></li>
+                                                            <li><a href="product-list.jsp?fscID=<%= fsc.getFirstSubcategoryId()%>&sscID=<%= ssc.getSecondSubcategoryId()%>"><%= ssc.getName()%></a></li>
 
                                                             <%                                                                }
                                                             %>
@@ -236,6 +236,132 @@
 </section>
 
 
+<style>
+    md-toolbar.md-default-theme.md-hue-2:not(.md-menu-toolbar), md-toolbar.md-hue-2:not(.md-menu-toolbar) {
+        background-color: rgb(244, 244, 251);
+        color: rgba(255,255,255,0.87);
+    }
+</style>                           
+
+<section>
+    <md-toolbar class="md-hue-2 visible-xs">
+        <div class="md-toolbar-tools">
+            <md-button class="md-icon-button" aria-label="Settings" ng-click="toggleRight()">
+                <i class="material-icons">menu</i>
+            </md-button>
+            <h2 style="color: black;">
+                <span>popcon</span>
+            </h2>
+            <span flex></span>
+            <md-button class="md-icon-button" aria-label="Favorite" style="height: 60px;width:50px;margin-top: 13px;" >
+                <div class="material-icons mdl-badge mdl-badge--overlap" data-badge="<%= wishlist%>">favorite</div>
+            </md-button>
+            <md-button class="md-icon-button" aria-label="Favorite" style="height: 60px;width:50px;margin-top: 13px;">
+                <div class="material-icons mdl-badge mdl-badge--overlap" data-badge="<%= cart%>">shopping_cart</div>
+            </md-button>
+        </div>
+    </md-toolbar>
+</section>                            
+
+<section>
+    <md-sidenav class="md-sidenav-left md-whiteframe-4dp" md-component-id="right">
+
+        <div class="row" style="border-bottom: 1px solid; border-bottom-color: gray;">
+            <div class="col-xs-3">
+                <img src="images/user.svg" style="width: 80%;margin-top: 8px;margin-left: 10px;">
+            </div>
+            <div class="col-xs-9" style="padding-top:10px;">
+                <span>
+                    <b>Hi Guest</b><br>
+                    <small>SignIn or Create new Account</small>
+                </span>
+            </div>
+        </div>
+
+        <div class="row" style="border-bottom: 1px solid; border-bottom-color: gray;">
+            <div class="col-xs-3">
+                <img src="images/home.svg" style="width: 50%;margin-top: 8px;margin-left: 20px;">
+            </div>
+            <div class="col-xs-9" style="padding-top:10px;">
+                <span>
+                    <b>Home</b><small>&nbsp;&nbsp;&nbsp;(What's Hot,Men,women)</small>
+                </span>
+            </div>
+        </div>
+
+        <div ng-cloak>
+            <md-content>
+                <md-tabs md-dynamic-height md-border-bottom>
+
+                    <%
+
+                        for (Object o : mainCategoryList) {
+                            MainCategory mc = (MainCategory) o;
+                            Criteria fsc_c = head_session.createCriteria(FirstSubcategory.class);
+                            fsc_c.add(Restrictions.eq("mainCategory", mc));
+                    %>
+
+                    <md-tab label="<%= mc.getName()%>">
+                        <md-content class="md-padding">
+
+                            <%
+                                for (Object fsc_o : fsc_c.list()) {
+                                    FirstSubcategory fsc = (FirstSubcategory) fsc_o;
+                            %>
+
+
+                            <div class="panel-group">
+                                <div class="panel">
+                                    <a data-toggle="collapse" href="#<%= fsc.getName()%>">
+                                        <div class="panel-heading">
+                                            <p class="panel-title">
+                                                <%= fsc.getName()%>
+                                            </p>
+                                        </div>
+                                    </a>
+                                    <div id="<%= fsc.getName()%>" class="panel-collapse collapse">
+                                        <ul class="list-group">
+                                            <%
+                                                Criteria ssc_c = head_session.createCriteria(SecondSubcategory.class);
+                                                ssc_c.add(Restrictions.eq("firstSubcategory", fsc));
+
+                                                for (Object ssc_o : ssc_c.list()) {
+                                                    SecondSubcategory ssc = (SecondSubcategory) ssc_o;
+                                            %>
+
+                                            <li class="list-group-item"><%= ssc.getName()%></li>
+
+                                            <%
+                                                }
+                                            %>
+
+
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <%
+                                }
+                            %>
+
+                        </md-content>
+                    </md-tab>
+
+
+                    <%                        }
+                    %>
+
+
+            </md-content>
+        </div>
+
+
+    </md-sidenav>
+</section>
+
 <script>
     var navbar = $(".navbar").width();
     $(".dropdown-menu").css({"width": navbar - 5});
@@ -248,7 +374,7 @@
 
     var app = angular.module('popcon', ['ngMaterial'])
     app.controller('search', DemoCtrl);
-    function DemoCtrl($timeout, $q, $log) {
+    function DemoCtrl($timeout, $q, $log, $scope, $mdSidenav) {
         var self = this;
         self.simulateQuery = false;
         self.isDisabled = false;
@@ -263,6 +389,53 @@
          * Search for repos... use $timeout to simulate
          * remote dataservice call.
          */
+
+        $scope.toggleRight = buildToggler('right');
+        $scope.isOpenRight = function () {
+            return $mdSidenav('right').isOpen();
+        };
+        /**
+         * Supplies a function that will continue to operate until the
+         * time is up.
+         */
+        function debounce(func, wait, context) {
+            var timer;
+            return function debounced() {
+                var context = $scope,
+                        args = Array.prototype.slice.call(arguments);
+                $timeout.cancel(timer);
+                timer = $timeout(function () {
+                    timer = undefined;
+                    func.apply(context, args);
+                }, wait || 10);
+            };
+        }
+        /**
+         * Build handler to open/close a SideNav; when animation finishes
+         * report completion in console
+         */
+        function buildDelayedToggler(navID) {
+            return debounce(function () {
+                // Component lookup should always be available since we are not using `ng-if`
+                $mdSidenav(navID)
+                        .toggle()
+                        .then(function () {
+                            $log.debug("toggle " + navID + " is done");
+                        });
+            }, 200);
+        }
+        function buildToggler(navID) {
+            return function () {
+                // Component lookup should always be available since we are not using `ng-if`
+                $mdSidenav(navID)
+                        .toggle()
+                        .then(function () {
+                            $log.debug("toggle " + navID + " is done");
+                        });
+            }
+        }
+
+
         function querySearch(query) {
             var results = query ? self.repos.filter(createFilterFor(query)) : self.repos,
                     deferred;
@@ -333,6 +506,17 @@
             };
         }
     }
+    ;
+
+    app.controller('RightCtrl', function ($scope, $timeout, $mdSidenav, $log) {
+        $scope.close = function () {
+            // Component lookup should always be available since we are not using `ng-if`
+            $mdSidenav('right').close()
+                    .then(function () {
+                        $log.debug("close RIGHT is done");
+                    });
+        };
+    });
 
     $(function () {
         $(".dropdown").hover(
