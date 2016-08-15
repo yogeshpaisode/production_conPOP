@@ -16,26 +16,39 @@
 
         <%    
             JSONSerializer serializer = new JSONSerializer();
-            Criteria cr = hib_session.createCriteria(ProductByColor.class);
-            List results = cr.list();
             List productBeanList = new ArrayList();
-            for (Object obj : results) {
-                ProductByColor pdc = (ProductByColor) obj;
-                ProductBean bean = new ProductBean();
-                ProductDetail pd = pdc.getProductDetail();
-
-                bean.setDisplayPrice(pd.getDisplayPrice() + "");
-                bean.setFirstSubcategory(pd.getFirstSubcategory().getName());
-                bean.setMainCategory(pd.getMainCategory().getName());
-                bean.setSecondSubcategory(pd.getSecondSubcategory().getName());
-                bean.setProductDetailId(pdc.getProductByColorId());
-                bean.setSearchTag(pd.getSearchTag());
-                bean.setSellingPrice(pd.getSellingPrice() + "");
-                bean.setTitle(pdc.getTitle());
-                productBeanList.add(bean);
+            int fscID=Integer.parseInt(request.getParameter("fscID"));
+            Criteria cr=hib_session.createCriteria(FirstSubcategory.class);
+            cr.add(Restrictions.eq("firstSubcategoryId", fscID));
+            FirstSubcategory id=(FirstSubcategory)cr.list().get(0);
+           
+            cr=hib_session.createCriteria(ProductDetail.class);
+            cr.add(Restrictions.eq("firstSubcategory", id));
+           
+            if(!(request.getParameter("sscID").equals("na"))){
+                int sscID=Integer.parseInt(request.getParameter("sscID"));
+                Criteria cr_temp=hib_session.createCriteria(SecondSubcategory.class);
+                cr_temp.add(Restrictions.eq("secondSubcategoryId", sscID));
+                SecondSubcategory ss=(SecondSubcategory)cr_temp.list().get(0);
+                cr.add(Restrictions.eq("secondSubcategory", ss));
             }
-            String productList=serializer.exclude("*.class").serialize(productBeanList);
             
+            for(Object o:cr.list()){
+                ProductDetail pd=(ProductDetail)o;
+                Criteria crr=hib_session.createCriteria(ProductByColor.class);
+                crr.add(Restrictions.eq("productDetail", pd));
+                for(Object oo:crr.list()){
+                    ProductByColor pbc=(ProductByColor)oo;
+                    ProductBean bean=new ProductBean();
+                    bean.setDisplayPrice(pd.getDisplayPrice());
+                    bean.setSellingPrice(pd.getSellingPrice());
+                    bean.setTitle(pbc.getTitle());
+                    bean.setProductByColorId(pbc.getProductByColorId());
+                    productBeanList.add(bean);
+                }
+            }
+            
+            String productList=serializer.exclude("*.class").serialize(productBeanList);
         %>
 
 
@@ -93,7 +106,7 @@
 
                                                                                                             <div class="col-md-3 col-sm-6 col-xs-12 col-padding" ng-repeat="p in product_List">
                                                                                                                 <div class="pop_card">
-                                                                                                                    <a href="product-view.jsp?id={{p.productDetailId}}">
+                                                                                                                    <a href="product-view.jsp?id={{p.productByColorId}}">
                                                                                                                         <img src="http://stat.abofcdn.com/stories/2016/July/09-07-2016/CollectionMen/MenCard1_Desktop.jpg" class="md-card-image img-responsive" alt="Washed Out">
                                                                                                                     </a>
 
@@ -130,6 +143,7 @@
                                                                                                     <script>
                                                                                                                 app.controller("productList",function ($scope){
                                                                                                                     $scope.product_List=<%= productList%>;
+                                                                                                                    console.log($scope.product_List);
                                                                                                                 });
                                                                                                     </script>
 

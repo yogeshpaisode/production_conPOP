@@ -11,13 +11,14 @@
 <%
     int cart = 0;
     int wishlist = 0;
-    String headerMessage="MY ACCOUNT";
+    String headerMessage = "MY ACCOUNT";
+    SessionFactory sf = hibernate.HibernateUtil.getSessionFactory();
+    Session head_session = sf.openSession();
+
     try {
         session.getAttribute("isLoggedIn").toString();
         User user = (User) session.getAttribute("User");
-        headerMessage="Hii "+user.getFirstName();
-        SessionFactory sessionFactory = hibernate.HibernateUtil.getSessionFactory();
-        Session head_session = sessionFactory.openSession();
+        headerMessage = "Hii " + user.getFirstName();
         Criteria c = head_session.createCriteria(Cart.class);
         c.add(Restrictions.eq("user", user));
 
@@ -29,8 +30,6 @@
                 wishlist++;
             }
         }
-
-        head_session.close();
 
     } catch (Exception e) {
     }
@@ -57,7 +56,7 @@
                                     md-items="item in ctrl.querySearch(ctrl.searchText)"
                                     md-item-text="item.name"
                                     md-min-length="0"
-                                    placeholder="Search Your Wish Start Here &#9786; &#9786;"
+                                    placeholder="Search Your Wish Here &#9786; &#9786;"
                                     md-menu-class="autocomplete-custom-template">
                                     <md-item-template>
                                         <span class="item-title">
@@ -88,7 +87,7 @@
                     <div class="col-md-1 col-sm-3 text-right nopadding option">
                         <div class="option">
                             <a href="wishList.jsp">
-                                <div class="material-icons mdl-badge mdl-badge--overlap" data-badge="<%= wishlist %>">favorite</div>
+                                <div class="material-icons mdl-badge mdl-badge--overlap" data-badge="<%= wishlist%>">favorite</div>
                             </a>
                         </div>
                     </div>
@@ -96,7 +95,7 @@
                         <div class="option">
                             &nbsp;&nbsp;
                             <a href="cart-step1.jsp">
-                                <div class="material-icons mdl-badge mdl-badge--overlap" data-badge="<%= cart %>">shopping_cart</div>
+                                <div class="material-icons mdl-badge mdl-badge--overlap" data-badge="<%= cart%>">shopping_cart</div>
                             </a>
                         </div>
                     </div>
@@ -131,9 +130,21 @@
                         <!-- Collect the nav links, forms, and other content for toggling -->
                         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                             <ul class="nav navbar-nav">
+
+                                <%
+                                    Criteria drop_cr = head_session.createCriteria(MainCategory.class);
+                                    List mainCategoryList = drop_cr.list();
+                                    int left=60;
+                                    for (Object o : mainCategoryList) {
+                                        MainCategory mc = (MainCategory) o;
+                                        left+=90;
+                                %>
+
+
+
                                 <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">MEN <span class="caret"></span></a>
-                                    <div class="dropdown-menu" style="left:-150px;">
+                                    <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= mc.getName()%> <span class="caret"></span></a>
+                                    <div class="dropdown-menu" style="left:-<%= left%>px;">
 
 
                                         <div class="row">
@@ -143,189 +154,44 @@
 
                                                 <div class="row">
 
+
+                                                    <%
+                                                        Criteria fsc_c = head_session.createCriteria(FirstSubcategory.class);
+                                                        fsc_c.add(Restrictions.eq("mainCategory", mc));
+
+                                                        for (Object fsc_o : fsc_c.list()) {
+                                                            FirstSubcategory fsc = (FirstSubcategory) fsc_o;
+                                                    %>
+
+
                                                     <div class="col-md-3">
 
                                                         <ul>
-                                                            <li><a href="#">Action</a></li>
-                                                            <li><a href="#">Another action</a></li>
-                                                            <li><a href="#">Something else here</a></li>
                                                             <li role="separator" class="divider"></li>
-                                                            <li><a href="#">Separated link</a></li>
+                                                            <li><a href="product-list.jsp?fscID=<%= fsc.getFirstSubcategoryId() %>&sscID=na"><%= fsc.getName()%></a></li>
                                                             <li role="separator" class="divider"></li>
-                                                            <li><a href="#">One more separated link</a></li>
-                                                        </ul>
 
-                                                    </div>
-                                                    <div class="col-md-3">
+                                                            <%
+                                                                Criteria ssc_c = head_session.createCriteria(SecondSubcategory.class);
+                                                                ssc_c.add(Restrictions.eq("firstSubcategory", fsc));
 
-                                                        <ul>
-                                                            <li><a href="#">Action</a></li>
-                                                            <li><a href="#">Another action</a></li>
-                                                            <li><a href="#">Something else here</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">Separated link</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">One more separated link</a></li>
-                                                        </ul>
+                                                                for (Object ssc_o:ssc_c.list()) {
+                                                                    SecondSubcategory ssc=(SecondSubcategory)ssc_o;
+                                                            %>
 
-                                                    </div>
-                                                    <div class="col-md-3">
 
-                                                        <ul>
-                                                            <li><a href="#">Action</a></li>
-                                                            <li><a href="#">Another action</a></li>
-                                                            <li><a href="#">Something else here</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">Separated link</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">One more separated link</a></li>
-                                                        </ul>
+                                                            <li><a href="product-list.jsp?fscID=<%= fsc.getFirstSubcategoryId() %>&sscID=<%= ssc.getSecondSubcategoryId() %>"><%= ssc.getName() %></a></li>
 
-                                                    </div>
-                                                    <div class="col-md-3">
+                                                            <%                                                                }
+                                                            %>
 
-                                                        <ul>
-                                                            <li><a href="#">Action</a></li>
-                                                            <li><a href="#">Another action</a></li>
-                                                            <li><a href="#">Something else here</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">Separated link</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">One more separated link</a></li>
-                                                        </ul>
-
-                                                    </div>
-                                                    <div class="col-md-3">
-
-                                                        <ul>
-                                                            <li><a href="#">Action</a></li>
-                                                            <li><a href="#">Another action</a></li>
-                                                            <li><a href="#">Something else here</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">Separated link</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">One more separated link</a></li>
-                                                        </ul>
-
-                                                    </div>
-                                                    <div class="col-md-3">
-
-                                                        <ul>
-                                                            <li><a href="#">Action</a></li>
-                                                            <li><a href="#">Another action</a></li>
-                                                            <li><a href="#">Something else here</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">Separated link</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">One more separated link</a></li>
-                                                        </ul>
-
-                                                    </div>
-                                                    <div class="col-md-3">
-
-                                                        <ul>
-                                                            <li><a href="#">Action</a></li>
-                                                            <li><a href="#">Another action</a></li>
-                                                            <li><a href="#">Something else here</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">Separated link</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">One more separated link</a></li>
-                                                        </ul>
-
-                                                    </div>
-                                                    <div class="col-md-3">
-
-                                                        <ul>
-                                                            <li><a href="#">Action</a></li>
-                                                            <li><a href="#">Another action</a></li>
-                                                            <li><a href="#">Something else here</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">Separated link</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">One more separated link</a></li>
-                                                        </ul>
-
-                                                    </div>
-                                                    <div class="col-md-3">
-
-                                                        <ul>
-                                                            <li><a href="#">Action</a></li>
-                                                            <li><a href="#">Another action</a></li>
-                                                            <li><a href="#">Something else here</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">Separated link</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">One more separated link</a></li>
-                                                        </ul>
-
-                                                    </div>
-                                                    <div class="col-md-3">
-
-                                                        <ul>
-                                                            <li><a href="#">Action</a></li>
-                                                            <li><a href="#">Another action</a></li>
-                                                            <li><a href="#">Something else here</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">Separated link</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">One more separated link</a></li>
-                                                        </ul>
-
-                                                    </div>
-                                                    <div class="col-md-3">
-
-                                                        <ul>
-                                                            <li><a href="#">Action</a></li>
-                                                            <li><a href="#">Another action</a></li>
-                                                            <li><a href="#">Something else here</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">Separated link</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">One more separated link</a></li>
-                                                        </ul>
-
-                                                    </div>
-                                                    <div class="col-md-3">
-
-                                                        <ul>
-                                                            <li><a href="#">Action</a></li>
-                                                            <li><a href="#">Another action</a></li>
-                                                            <li><a href="#">Something else here</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">Separated link</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">One more separated link</a></li>
-                                                        </ul>
-
-                                                    </div>
-                                                    <div class="col-md-3">
-
-                                                        <ul>
-                                                            <li><a href="#">Action</a></li>
-                                                            <li><a href="#">Another action</a></li>
-                                                            <li><a href="#">Something else here</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">Separated link</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">One more separated link</a></li>
-                                                        </ul>
-
-                                                    </div>
-                                                    <div class="col-md-3">
-
-                                                        <ul>
-                                                            <li><a href="#">Action</a></li>
-                                                            <li><a href="#">Another action</a></li>
-                                                            <li><a href="#">Something else here</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">Separated link</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">One more separated link</a></li>
                                                         </ul>
 
                                                     </div>
 
+                                                    <%
+                                                        }
+                                                    %>
 
                                                 </div>
 
@@ -343,422 +209,10 @@
 
                                     </div>
                                 </li>
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">women <span class="caret"></span></a>
-                                    <div class="dropdown-menu" style="left:-240px;">
-                                        <div class="row">
 
-                                            <div class="col-md-8">
 
-
-                                                <div class="row">
-
-                                                    <div class="col-md-3">
-
-                                                        <ul>
-                                                            <li><a href="#">Action</a></li>
-                                                            <li><a href="#">Another action</a></li>
-                                                            <li><a href="#">Something else here</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">Separated link</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">One more separated link</a></li>
-                                                        </ul>
-
-                                                    </div>
-                                                    <div class="col-md-3">
-
-                                                        <ul>
-                                                            <li><a href="#">Action</a></li>
-                                                            <li><a href="#">Another action</a></li>
-                                                            <li><a href="#">Something else here</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">Separated link</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">One more separated link</a></li>
-                                                        </ul>
-
-                                                    </div>
-                                                    <div class="col-md-3">
-
-                                                        <ul>
-                                                            <li><a href="#">Action</a></li>
-                                                            <li><a href="#">Another action</a></li>
-                                                            <li><a href="#">Something else here</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">Separated link</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">One more separated link</a></li>
-                                                        </ul>
-
-                                                    </div>
-                                                    <div class="col-md-3">
-
-                                                        <ul>
-                                                            <li><a href="#">Action</a></li>
-                                                            <li><a href="#">Another action</a></li>
-                                                            <li><a href="#">Something else here</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">Separated link</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">One more separated link</a></li>
-                                                        </ul>
-
-                                                    </div>
-                                                    <div class="col-md-3">
-
-                                                        <ul>
-                                                            <li><a href="#">Action</a></li>
-                                                            <li><a href="#">Another action</a></li>
-                                                            <li><a href="#">Something else here</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">Separated link</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">One more separated link</a></li>
-                                                        </ul>
-
-                                                    </div>
-                                                    <div class="col-md-3">
-
-                                                        <ul>
-                                                            <li><a href="#">Action</a></li>
-                                                            <li><a href="#">Another action</a></li>
-                                                            <li><a href="#">Something else here</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">Separated link</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">One more separated link</a></li>
-                                                        </ul>
-
-                                                    </div>
-                                                    <div class="col-md-3">
-
-                                                        <ul>
-                                                            <li><a href="#">Action</a></li>
-                                                            <li><a href="#">Another action</a></li>
-                                                            <li><a href="#">Something else here</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">Separated link</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">One more separated link</a></li>
-                                                        </ul>
-
-                                                    </div>
-                                                    <div class="col-md-3">
-
-                                                        <ul>
-                                                            <li><a href="#">Action</a></li>
-                                                            <li><a href="#">Another action</a></li>
-                                                            <li><a href="#">Something else here</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">Separated link</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">One more separated link</a></li>
-                                                        </ul>
-
-                                                    </div>
-                                                    <div class="col-md-3">
-
-                                                        <ul>
-                                                            <li><a href="#">Action</a></li>
-                                                            <li><a href="#">Another action</a></li>
-                                                            <li><a href="#">Something else here</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">Separated link</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">One more separated link</a></li>
-                                                        </ul>
-
-                                                    </div>
-                                                    <div class="col-md-3">
-
-                                                        <ul>
-                                                            <li><a href="#">Action</a></li>
-                                                            <li><a href="#">Another action</a></li>
-                                                            <li><a href="#">Something else here</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">Separated link</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">One more separated link</a></li>
-                                                        </ul>
-
-                                                    </div>
-                                                    <div class="col-md-3">
-
-                                                        <ul>
-                                                            <li><a href="#">Action</a></li>
-                                                            <li><a href="#">Another action</a></li>
-                                                            <li><a href="#">Something else here</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">Separated link</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">One more separated link</a></li>
-                                                        </ul>
-
-                                                    </div>
-                                                    <div class="col-md-3">
-
-                                                        <ul>
-                                                            <li><a href="#">Action</a></li>
-                                                            <li><a href="#">Another action</a></li>
-                                                            <li><a href="#">Something else here</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">Separated link</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">One more separated link</a></li>
-                                                        </ul>
-
-                                                    </div>
-                                                    <div class="col-md-3">
-
-                                                        <ul>
-                                                            <li><a href="#">Action</a></li>
-                                                            <li><a href="#">Another action</a></li>
-                                                            <li><a href="#">Something else here</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">Separated link</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">One more separated link</a></li>
-                                                        </ul>
-
-                                                    </div>
-                                                    <div class="col-md-3">
-
-                                                        <ul>
-                                                            <li><a href="#">Action</a></li>
-                                                            <li><a href="#">Another action</a></li>
-                                                            <li><a href="#">Something else here</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">Separated link</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">One more separated link</a></li>
-                                                        </ul>
-
-                                                    </div>
-
-
-                                                </div>
-
-
-                                            </div>
-
-                                            <div class="col-md-4">
-                                                <img src="http://stat.abofcdn.com/stories/June%202016%2F18-06-2016%2FMindyourLength/Card_Desktop.jpg">
-                                            </div>
-
-
-                                        </div><!--End of Row-->
-
-                                    </div>
-                                </li>
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">decor <span class="caret"></span></a>
-                                    <div class="dropdown-menu" style="left:-355px;">
-                                        <div class="row">
-
-                                            <div class="col-md-8">
-
-
-                                                <div class="row">
-
-                                                    <div class="col-md-3">
-
-                                                        <ul>
-                                                            <li><a href="#">Action</a></li>
-                                                            <li><a href="#">Another action</a></li>
-                                                            <li><a href="#">Something else here</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">Separated link</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">One more separated link</a></li>
-                                                        </ul>
-
-                                                    </div>
-                                                    <div class="col-md-3">
-
-                                                        <ul>
-                                                            <li><a href="#">Action</a></li>
-                                                            <li><a href="#">Another action</a></li>
-                                                            <li><a href="#">Something else here</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">Separated link</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">One more separated link</a></li>
-                                                        </ul>
-
-                                                    </div>
-                                                    <div class="col-md-3">
-
-                                                        <ul>
-                                                            <li><a href="#">Action</a></li>
-                                                            <li><a href="#">Another action</a></li>
-                                                            <li><a href="#">Something else here</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">Separated link</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">One more separated link</a></li>
-                                                        </ul>
-
-                                                    </div>
-                                                    <div class="col-md-3">
-
-                                                        <ul>
-                                                            <li><a href="#">Action</a></li>
-                                                            <li><a href="#">Another action</a></li>
-                                                            <li><a href="#">Something else here</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">Separated link</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">One more separated link</a></li>
-                                                        </ul>
-
-                                                    </div>
-                                                    <div class="col-md-3">
-
-                                                        <ul>
-                                                            <li><a href="#">Action</a></li>
-                                                            <li><a href="#">Another action</a></li>
-                                                            <li><a href="#">Something else here</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">Separated link</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">One more separated link</a></li>
-                                                        </ul>
-
-                                                    </div>
-                                                    <div class="col-md-3">
-
-                                                        <ul>
-                                                            <li><a href="#">Action</a></li>
-                                                            <li><a href="#">Another action</a></li>
-                                                            <li><a href="#">Something else here</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">Separated link</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">One more separated link</a></li>
-                                                        </ul>
-
-                                                    </div>
-                                                    <div class="col-md-3">
-
-                                                        <ul>
-                                                            <li><a href="#">Action</a></li>
-                                                            <li><a href="#">Another action</a></li>
-                                                            <li><a href="#">Something else here</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">Separated link</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">One more separated link</a></li>
-                                                        </ul>
-
-                                                    </div>
-                                                    <div class="col-md-3">
-
-                                                        <ul>
-                                                            <li><a href="#">Action</a></li>
-                                                            <li><a href="#">Another action</a></li>
-                                                            <li><a href="#">Something else here</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">Separated link</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">One more separated link</a></li>
-                                                        </ul>
-
-                                                    </div>
-                                                    <div class="col-md-3">
-
-                                                        <ul>
-                                                            <li><a href="#">Action</a></li>
-                                                            <li><a href="#">Another action</a></li>
-                                                            <li><a href="#">Something else here</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">Separated link</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">One more separated link</a></li>
-                                                        </ul>
-
-                                                    </div>
-                                                    <div class="col-md-3">
-
-                                                        <ul>
-                                                            <li><a href="#">Action</a></li>
-                                                            <li><a href="#">Another action</a></li>
-                                                            <li><a href="#">Something else here</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">Separated link</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">One more separated link</a></li>
-                                                        </ul>
-
-                                                    </div>
-                                                    <div class="col-md-3">
-
-                                                        <ul>
-                                                            <li><a href="#">Action</a></li>
-                                                            <li><a href="#">Another action</a></li>
-                                                            <li><a href="#">Something else here</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">Separated link</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">One more separated link</a></li>
-                                                        </ul>
-
-                                                    </div>
-                                                    <div class="col-md-3">
-
-                                                        <ul>
-                                                            <li><a href="#">Action</a></li>
-                                                            <li><a href="#">Another action</a></li>
-                                                            <li><a href="#">Something else here</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">Separated link</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">One more separated link</a></li>
-                                                        </ul>
-
-                                                    </div>
-                                                    <div class="col-md-3">
-
-                                                        <ul>
-                                                            <li><a href="#">Action</a></li>
-                                                            <li><a href="#">Another action</a></li>
-                                                            <li><a href="#">Something else here</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">Separated link</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">One more separated link</a></li>
-                                                        </ul>
-
-                                                    </div>
-                                                    <div class="col-md-3">
-
-                                                        <ul>
-                                                            <li><a href="#">Action</a></li>
-                                                            <li><a href="#">Another action</a></li>
-                                                            <li><a href="#">Something else here</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">Separated link</a></li>
-                                                            <li role="separator" class="divider"></li>
-                                                            <li><a href="#">One more separated link</a></li>
-                                                        </ul>
-
-                                                    </div>
-
-
-                                                </div>
-
-
-                                            </div>
-
-                                            <div class="col-md-4">
-                                                <img src="http://stat.abofcdn.com/stories/June%202016%2F10-06-2016%2FMTV/Card_Desktop.jpg">
-                                            </div>
-
-
-                                        </div><!--End of Row-->
-
-                                    </div>
-                                </li>
+                                <%                                    }
+                                %>
                             </ul>
                             <ul class="nav navbar-nav navbar-right">
                                 <li><a href="profile.jsp"><span><i class="fa fa-user" aria-hidden="true"></i> <%= headerMessage%></span></a></li>
@@ -896,3 +350,7 @@
 
 
 </script>
+
+<%
+    head_session.close();
+%>

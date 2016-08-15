@@ -10,68 +10,32 @@ package bean;
  * @author yogeshpaisode
  */
 public class ProductBean {
-    private int productDetailId;
-    private String firstSubcategory;
-    private String mainCategory;
-    private String secondSubcategory;
-    private String searchTag;
-    private String sellingPrice;
-    private String displayPrice;
+    private int productByColorId;
+    private int sellingPrice;
+    private int displayPrice;
     private String title;
 
-    public int getProductDetailId() {
-        return productDetailId;
+    public int getProductByColorId() {
+        return productByColorId;
     }
 
-    public void setProductDetailId(int productDetailId) {
-        this.productDetailId = productDetailId;
+    public void setProductByColorId(int productByColorId) {
+        this.productByColorId = productByColorId;
     }
 
-    public String getFirstSubcategory() {
-        return firstSubcategory;
-    }
-
-    public void setFirstSubcategory(String firstSubcategory) {
-        this.firstSubcategory = firstSubcategory;
-    }
-
-    public String getMainCategory() {
-        return mainCategory;
-    }
-
-    public void setMainCategory(String mainCategory) {
-        this.mainCategory = mainCategory;
-    }
-
-    public String getSecondSubcategory() {
-        return secondSubcategory;
-    }
-
-    public void setSecondSubcategory(String secondSubcategory) {
-        this.secondSubcategory = secondSubcategory;
-    }
-
-    public String getSearchTag() {
-        return searchTag;
-    }
-
-    public void setSearchTag(String searchTag) {
-        this.searchTag = searchTag;
-    }
-
-    public String getSellingPrice() {
+    public int getSellingPrice() {
         return sellingPrice;
     }
 
-    public void setSellingPrice(String sellingPrice) {
+    public void setSellingPrice(int sellingPrice) {
         this.sellingPrice = sellingPrice;
     }
 
-    public String getDisplayPrice() {
+    public int getDisplayPrice() {
         return displayPrice;
     }
 
-    public void setDisplayPrice(String displayPrice) {
+    public void setDisplayPrice(int displayPrice) {
         this.displayPrice = displayPrice;
     }
 
@@ -82,4 +46,5 @@ public class ProductBean {
     public void setTitle(String title) {
         this.title = title;
     }
+
 }
