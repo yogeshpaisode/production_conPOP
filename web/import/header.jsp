@@ -11,12 +11,14 @@
 <%
     int cart = 0;
     int wishlist = 0;
+    boolean isValidFlag = false;
     String headerMessage = "MY ACCOUNT";
     SessionFactory sf = hibernate.HibernateUtil.getSessionFactory();
     Session head_session = sf.openSession();
 
     try {
         session.getAttribute("isLoggedIn").toString();
+        isValidFlag = true;
         User user = (User) session.getAttribute("User");
         headerMessage = "Hii " + user.getFirstName();
         Criteria c = head_session.createCriteria(Cart.class);
@@ -217,8 +219,24 @@
                             <ul class="nav navbar-nav navbar-right">
                                 <li class="dropdown">
                                     <a href="profile.jsp"><span><i class="fa fa-user" aria-hidden="true"></i> <%= headerMessage%></span></a>
+
                                     <div class="dropdown-menu">
-                                        jjjjj
+                                        <div style="text-align: center">
+                                            <%
+                                                if (isValidFlag) {
+                                            %>
+
+                                            <a href="profile.jsp"><md-button>View Profile</md-button></a>
+                                            <a href="logout.jsp"><md-button>Logout</md-button></a>
+                                                    <%
+                                                    } else {
+
+                                                    %>
+                                                         <a href="auth.jsp"><md-button>Sign Up</md-button></a>
+                                                    <%                                        }
+                                                    %>
+
+                                        </div>
                                     </div>
                                 </li>
                             </ul>
