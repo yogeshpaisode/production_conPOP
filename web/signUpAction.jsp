@@ -13,7 +13,12 @@
     hib_session.save(user);
     transaction.commit();
     session.setAttribute("isLoggedIn", "true");
-    String lastPage = session.getAttribute("lastPage").toString();
+    String lastPage = "";
+    try {
+        lastPage = session.getAttribute("lastPage").toString();
+    } catch (Exception e) {
+        lastPage = "profile.jsp";
+    }
     if (lastPage.equals("cart")) {
         response.sendRedirect("addToCartAction.jsp");
     } else {
