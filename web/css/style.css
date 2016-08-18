@@ -1,4 +1,6 @@
-
+a.md-default-theme:not(.md-button), a:not(.md-button) {
+    color: black;
+}
 .size_list {
     background-color: #0b0b0b;
     color: white;

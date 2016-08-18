@@ -144,7 +144,7 @@
 
                                 <li class="dropdown">
                                     <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= mc.getName()%> <span class="caret"></span></a>
-                                    <div class="dropdown-menu" style="left:-<%= left%>px;">
+                                    <div class="dropdown-menu pop_dropdown" style="left:-<%= left%>px;">
 
 
                                         <div class="row">
@@ -215,7 +215,12 @@
                                 %>
                             </ul>
                             <ul class="nav navbar-nav navbar-right">
-                                <li><a href="profile.jsp"><span><i class="fa fa-user" aria-hidden="true"></i> <%= headerMessage%></span></a></li>
+                                <li class="dropdown">
+                                    <a href="profile.jsp"><span><i class="fa fa-user" aria-hidden="true"></i> <%= headerMessage%></span></a>
+                                    <div class="dropdown-menu">
+                                        jjjjj
+                                    </div>
+                                </li>
                             </ul>
                         </div><!-- /.navbar-collapse -->
                     </div><!-- /.container-fluid -->
@@ -364,12 +369,12 @@
 
 <script>
     var navbar = $(".navbar").width();
-    $(".dropdown-menu").css({"width": navbar - 5});
+    $(".pop_dropdown").css({"width": navbar - 5});
 
 
     $(window).resize(function () {
         navbar = $(".navbar").width();
-        $(".dropdown-menu").css({"width": navbar - 5});
+        $(".pop_dropdown").css({"width": navbar - 5});
     });
 
     var app = angular.module('popcon', ['ngMaterial'])
@@ -521,12 +526,12 @@
     $(function () {
         $(".dropdown").hover(
                 function () {
-                    $('.dropdown-menu', this).stop(true, true).fadeIn("fast");
+                    $('.pop_dropdown', this).stop(true, true).fadeIn("fast");
                     $(this).toggleClass('open');
                     $('b', this).toggleClass("caret caret-up");
                 },
                 function () {
-                    $('.dropdown-menu', this).stop(true, true).fadeOut("fast");
+                    $('.pop_dropdown', this).stop(true, true).fadeOut("fast");
                     $(this).toggleClass('open');
                     $('b', this).toggleClass("caret caret-up");
                 });
