@@ -5,7 +5,8 @@
     String firstName = request.getParameter("firstName");
     String lastName = request.getParameter("lastName");
     String mobile = request.getParameter("mobile");
-    String gender = request.getParameter("gender");
+    //String gender = request.getParameter("gender");
+    String gender="Male";
     String password = request.getParameter("password");
 
     Transaction transaction = hib_session.beginTransaction();

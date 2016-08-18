@@ -70,11 +70,6 @@
                                                     <input type="tel" name="mobile" required="" ng-model="tel">
                                                 </li>
                                                 <li>
-                                                    <label>Gender</label>
-                                                    Male <input type="radio" name="gender" value="male">
-                                                    Female <input type="radio" name="gender" value="female">
-                                                </li>
-                                                <li>
                                                     <label>Password *</label>
                                                     <input type="password" required="" id="pass1">
                                                 </li>

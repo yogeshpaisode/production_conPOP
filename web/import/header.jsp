@@ -126,7 +126,7 @@
                                 <span class="icon-bar"></span>
                                 <span class="icon-bar"></span>
                             </button>
-                            <a class="navbar-brand" href="#"><img src="https://fbcdn-profile-a.akamaihd.net/hprofile-ak-xal1/v/t1.0-1/p160x160/12391839_1545826215741675_762648058580759885_n.jpg?oh=6b514d5615ac0a4228cb197e13ef2824&oe=57E2EC2D&__gda__=1473241605_8a0648db4e454b5b415fe365888dd474" class="logo" style="position: absolute;top: -15px;"></a>
+                            <a class="navbar-brand" href="index.jsp"><img src="images/popcon.jpg" class="logo" style="position: absolute;top: -15px;"></a>
                         </div>
 
                         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -248,13 +248,13 @@
     </div><!--End of Row-->
 
 
-
-    <div class="row">
-        <div class="col-md-12" style="margin-top: -15px;">
-            <hr class="nopadding">
-        </div>
-    </div><!--End of Row-->
-
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12" style="margin-top: -15px;">
+                <hr class="nopadding">
+            </div>
+        </div><!--End of Row-->
+    </div>
 
 </section>
 
@@ -386,17 +386,17 @@
 </section>
 
 <script>
-   function sendform(){
-       var pass1=document.getElementById("pass1").value;
-       var pass2=document.getElementById("pass2").value;
-       
-       if(pass1==pass2){
-           return true;
-       }
-       
-       return false;
-   }
-    
+    function sendform() {
+        var pass1 = document.getElementById("pass1").value;
+        var pass2 = document.getElementById("pass2").value;
+
+        if (pass1 == pass2) {
+            return true;
+        }
+
+        return false;
+    }
+
     var navbar = $(".navbar").width();
     $(".pop_dropdown").css({"width": navbar - 5});
 
@@ -419,16 +419,16 @@
         self.searchTextChange = searchTextChange;
 
         $scope.$watch("tel", function () {
-            if (!(typeof ($scope.tel)==="undefined")) {
+            if (!(typeof ($scope.tel) === "undefined")) {
                 if ($scope.tel.length > 10) {
-                    $scope.tel=$scope.tel.substring(0,10);
+                    $scope.tel = $scope.tel.substring(0, 10);
                 }
             }
         }, true);
         $scope.$watch("pincode", function () {
-            if (!(typeof ($scope.pincode)==="undefined")) {
+            if (!(typeof ($scope.pincode) === "undefined")) {
                 if ($scope.pincode.length > 6) {
-                    $scope.pincode=$scope.pincode.substring(0,6);
+                    $scope.pincode = $scope.pincode.substring(0, 6);
                 }
             }
         }, true);
