@@ -232,7 +232,7 @@
                                                     } else {
 
                                                     %>
-                                                         <a href="auth.jsp"><md-button>Sign Up</md-button></a>
+                                            <a href="auth.jsp"><md-button>Sign Up</md-button></a>
                                                     <%                                        }
                                                     %>
 
@@ -386,6 +386,17 @@
 </section>
 
 <script>
+   function sendform(){
+       var pass1=document.getElementById("pass1").value;
+       var pass2=document.getElementById("pass2").value;
+       
+       if(pass1==pass2){
+           return true;
+       }
+       
+       return false;
+   }
+    
     var navbar = $(".navbar").width();
     $(".pop_dropdown").css({"width": navbar - 5});
 
@@ -396,8 +407,9 @@
     });
 
     var app = angular.module('popcon', ['ngMaterial'])
+
     app.controller('search', DemoCtrl);
-    function DemoCtrl($timeout, $q, $log, $scope, $mdSidenav) {
+    function DemoCtrl($timeout, $q, $log, $scope, $mdSidenav, $scope) {
         var self = this;
         self.simulateQuery = false;
         self.isDisabled = false;
@@ -405,6 +417,21 @@
         self.querySearch = querySearch;
         self.selectedItemChange = selectedItemChange;
         self.searchTextChange = searchTextChange;
+
+        $scope.$watch("tel", function () {
+            if (!(typeof ($scope.tel)==="undefined")) {
+                if ($scope.tel.length > 10) {
+                    $scope.tel=$scope.tel.substring(0,10);
+                }
+            }
+        }, true);
+        $scope.$watch("pincode", function () {
+            if (!(typeof ($scope.pincode)==="undefined")) {
+                if ($scope.pincode.length > 6) {
+                    $scope.pincode=$scope.pincode.substring(0,6);
+                }
+            }
+        }, true);
         // ******************************
         // Internal methods
         // ******************************
