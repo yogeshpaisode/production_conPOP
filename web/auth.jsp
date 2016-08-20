@@ -13,6 +13,18 @@
 
     <body ng-app="popcon" ng-controller="search as ctrl" class="container">
 
+
+        <% if (response.getStatus() == 500) {%>
+        <script>
+                    swal({
+                        title: "Error!",
+                        text: <%= "\"" + exception.getMessage() + "\""%>,
+                        imageUrl: 'images/error.png'
+                    });
+        </script>
+        <%}%>
+
+
         <section>
 
             <style>
@@ -32,11 +44,6 @@
 
                                         <form action="logInAction.jsp" method="post">
                                             <ul class="input-list style-1">
-                                                <% if (response.getStatus() == 500) {%>
-                                                <li>
-                                                    <font color="red"><%=exception.getMessage()%></font>
-                                                </li>
-                                                <%}%>
                                                 <li>
                                                     <label>Email:</label>
                                                     <input type="email" name="email" required="" class="popTheme">

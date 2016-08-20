@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.indigo-pink.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/sweetalert.css">
     <link rel="stylesheet" href="css/style.css">
 
     <script src="js/jquery.min.js"></script>
@@ -31,5 +32,12 @@
     <script src="js/angular-aria.min.js"></script>
     <script src="js/angular-messages.min.js"></script>
     <script src="js/angular-material.min.js"></script>
+    <script src="js/sweetalert.min.js"></script>
+
+    <style>
+        h2{
+            font-size: 20px;
+        }
+    </style>
 
 </head>
