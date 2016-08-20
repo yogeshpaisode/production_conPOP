@@ -1,5 +1,5 @@
 package hibernate;
-// Generated Aug 13, 2016 4:59:35 PM by Hibernate Tools 4.3.1
+// Generated Aug 20, 2016 2:15:55 PM by Hibernate Tools 4.3.1
 
 
 
@@ -16,24 +16,33 @@ public class Cart  implements java.io.Serializable {
      private Boolean isCart;
      private Boolean isWishList;
      private Boolean isOrder;
+     private Boolean isConfirm;
+     private Boolean isDispatched;
+     private Boolean isReceivedByCustomer;
+     private int quantity;
      private String trxId;
 
     public Cart() {
     }
 
 	
-    public Cart(ProductSize productSize, ProductByColor productByColor, User user) {
+    public Cart(ProductSize productSize, ProductByColor productByColor, User user, int quantity) {
         this.productSize = productSize;
         this.productByColor = productByColor;
         this.user = user;
+        this.quantity = quantity;
     }
-    public Cart(ProductSize productSize, ProductByColor productByColor, User user, Boolean isCart, Boolean isWishList, Boolean isOrder, String trxId) {
+    public Cart(ProductSize productSize, ProductByColor productByColor, User user, Boolean isCart, Boolean isWishList, Boolean isOrder, Boolean isConfirm, Boolean isDispatched, Boolean isReceivedByCustomer, int quantity, String trxId) {
        this.productSize = productSize;
        this.productByColor = productByColor;
        this.user = user;
        this.isCart = isCart;
        this.isWishList = isWishList;
        this.isOrder = isOrder;
+       this.isConfirm = isConfirm;
+       this.isDispatched = isDispatched;
+       this.isReceivedByCustomer = isReceivedByCustomer;
+       this.quantity = quantity;
        this.trxId = trxId;
     }
    
@@ -85,6 +94,34 @@ public class Cart  implements java.io.Serializable {
     
     public void setIsOrder(Boolean isOrder) {
         this.isOrder = isOrder;
+    }
+    public Boolean getIsConfirm() {
+        return this.isConfirm;
+    }
+    
+    public void setIsConfirm(Boolean isConfirm) {
+        this.isConfirm = isConfirm;
+    }
+    public Boolean getIsDispatched() {
+        return this.isDispatched;
+    }
+    
+    public void setIsDispatched(Boolean isDispatched) {
+        this.isDispatched = isDispatched;
+    }
+    public Boolean getIsReceivedByCustomer() {
+        return this.isReceivedByCustomer;
+    }
+    
+    public void setIsReceivedByCustomer(Boolean isReceivedByCustomer) {
+        this.isReceivedByCustomer = isReceivedByCustomer;
+    }
+    public int getQuantity() {
+        return this.quantity;
+    }
+    
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
     public String getTrxId() {
         return this.trxId;

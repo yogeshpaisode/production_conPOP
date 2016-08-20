@@ -1,7 +1,8 @@
 <%@page import="org.hibernate.Transaction"%>
 <%@page import="hibernate.*"%>
 <%@ include file="/import/hibernateConfig.jsp"%>
-<%    String email = request.getParameter("email");
+<%    
+    String email = request.getParameter("email");
     String firstName = request.getParameter("firstName");
     String lastName = request.getParameter("lastName");
     String mobile = request.getParameter("mobile");
@@ -10,7 +11,7 @@
     String password = request.getParameter("password");
 
     Transaction transaction = hib_session.beginTransaction();
-    User user = new User(firstName, lastName, email, mobile, gender, null, null);
+    User user = new User(firstName, lastName, email, mobile, gender, password,null,null,null);
     hib_session.save(user);
     transaction.commit();
     session.setAttribute("isLoggedIn", "true");

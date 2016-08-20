@@ -1,5 +1,5 @@
 package hibernate;
-// Generated Aug 13, 2016 4:59:35 PM by Hibernate Tools 4.3.1
+// Generated Aug 20, 2016 2:15:55 PM by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -17,20 +17,24 @@ public class User  implements java.io.Serializable {
      private String email;
      private String mobile;
      private String gender;
+     private String password;
      private Set<Address> addresses = new HashSet<Address>(0);
      private Set<Cart> carts = new HashSet<Cart>(0);
+     private Set<Invoice> invoices = new HashSet<Invoice>(0);
 
     public User() {
     }
 
-    public User(String firstName, String lastName, String email, String mobile, String gender, Set<Address> addresses, Set<Cart> carts) {
+    public User(String firstName, String lastName, String email, String mobile, String gender, String password, Set<Address> addresses, Set<Cart> carts, Set<Invoice> invoices) {
        this.firstName = firstName;
        this.lastName = lastName;
        this.email = email;
        this.mobile = mobile;
        this.gender = gender;
+       this.password = password;
        this.addresses = addresses;
        this.carts = carts;
+       this.invoices = invoices;
     }
    
     public Integer getUserId() {
@@ -75,6 +79,13 @@ public class User  implements java.io.Serializable {
     public void setGender(String gender) {
         this.gender = gender;
     }
+    public String getPassword() {
+        return this.password;
+    }
+    
+    public void setPassword(String password) {
+        this.password = password;
+    }
     public Set<Address> getAddresses() {
         return this.addresses;
     }
@@ -88,6 +99,13 @@ public class User  implements java.io.Serializable {
     
     public void setCarts(Set<Cart> carts) {
         this.carts = carts;
+    }
+    public Set<Invoice> getInvoices() {
+        return this.invoices;
+    }
+    
+    public void setInvoices(Set<Invoice> invoices) {
+        this.invoices = invoices;
     }
 
 

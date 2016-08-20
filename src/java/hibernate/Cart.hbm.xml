@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Aug 13, 2016 4:59:36 PM by Hibernate Tools 4.3.1 -->
+<!-- Generated Aug 20, 2016 2:15:56 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="hibernate.Cart" table="cart" catalog="iguanast_con" optimistic-lock="version">
+    <class name="hibernate.Cart" table="cart" catalog="iguanast_coon" optimistic-lock="version">
         <id name="cartId" type="java.lang.Integer">
             <column name="cart_ID" />
             <generator class="identity" />
@@ -25,6 +25,18 @@
         </property>
         <property name="isOrder" type="java.lang.Boolean">
             <column name="is_order" />
+        </property>
+        <property name="isConfirm" type="java.lang.Boolean">
+            <column name="isConfirm" />
+        </property>
+        <property name="isDispatched" type="java.lang.Boolean">
+            <column name="isDispatched" />
+        </property>
+        <property name="isReceivedByCustomer" type="java.lang.Boolean">
+            <column name="isReceivedByCustomer" />
+        </property>
+        <property name="quantity" type="int">
+            <column name="quantity" not-null="true" />
         </property>
         <property name="trxId" type="string">
             <column name="trx_id" length="65535" />

@@ -4,6 +4,7 @@
     Author     : yogeshpaisode
 --%>
 
+<%@page import="java.util.Date"%>
 <%@page import="org.hibernate.Transaction"%>
 <%@page import="org.hibernate.criterion.Restrictions"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -18,6 +19,8 @@
 
 
         <%            
+            int totalAmount=Integer.parseInt(session.getAttribute("price").toString());
+            Date orderDate=new Date();
             String trxID=session.getAttribute("trxID").toString();
             String addressId=session.getAttribute("addressId").toString();
             String paymentType=request.getParameter("paymentType");
@@ -35,6 +38,8 @@
                 c.setTrxId(trxID);
                 hib_session.save(c);
             }
+            Invoice i=new Invoice(user, trxID, totalAmount, orderDate);
+            hib_session.save(i);
             transaction.commit();
         %>
 

@@ -63,3 +63,25 @@ KEY `FK_product_by_Color_ID_cart` (`product_by_Color_ID`),
   REFERENCES `product_Size` (`product_Size_ID`) ON DELETE CASCADE ON UPDATE CASCADE
 
 ) ENGINE=InnoDB;
+
+
+
+
+DROP TABLE IF EXISTS invoice;
+CREATE TABLE  invoice (
+  `invoice_ID` int(10) unsigned NOT NULL AUTO_INCREMENT,
+
+   trx_id text,
+    totalAmount int,
+    orderDate date,
+
+  `user_ID` int(10) unsigned NOT NULL,
+
+  PRIMARY KEY (`invoice_ID`) USING BTREE,
+
+  KEY `FK_TRANSACTION_invoice` (`user_ID`),
+  CONSTRAINT `FK_TRANSACTION_invoice` FOREIGN KEY (`user_ID`) 
+  REFERENCES `user` (`user_ID`) ON DELETE CASCADE ON UPDATE CASCADE
+
+) ENGINE=InnoDB;
+

@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated Aug 13, 2016 4:59:36 PM by Hibernate Tools 4.3.1 -->
+<!-- Generated Aug 20, 2016 2:15:56 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class name="hibernate.User" table="user" catalog="iguanast_con" optimistic-lock="version">
+    <class name="hibernate.User" table="user" catalog="iguanast_coon" optimistic-lock="version">
         <id name="userId" type="java.lang.Integer">
             <column name="user_ID" />
             <generator class="identity" />
@@ -23,6 +23,9 @@
         <property name="gender" type="string">
             <column name="gender" length="65535" />
         </property>
+        <property name="password" type="string">
+            <column name="password" length="65535" />
+        </property>
         <set name="addresses" table="address" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="user_ID" not-null="true" />
@@ -34,6 +37,12 @@
                 <column name="user_ID" not-null="true" />
             </key>
             <one-to-many class="hibernate.Cart" />
+        </set>
+        <set name="invoices" table="invoice" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="user_ID" not-null="true" />
+            </key>
+            <one-to-many class="hibernate.Invoice" />
         </set>
     </class>
 </hibernate-mapping>

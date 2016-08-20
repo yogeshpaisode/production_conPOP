@@ -4,19 +4,20 @@
   <session-factory>
     <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
     <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-    <property name="hibernate.connection.url">jdbc:mysql://iguanastudio.in:3306/iguanast_con?zeroDateTimeBehavior=convertToNull</property>
+    <property name="hibernate.connection.url">jdbc:mysql://iguanastudio.in:3306/iguanast_coon?zeroDateTimeBehavior=convertToNull</property>
     <property name="hibernate.connection.username">iguanast_con</property>
     <property name="hibernate.connection.password">Yogesh@318899</property>
-    <mapping resource="hibernate/SecondSubcategory.hbm.xml"/>
     <mapping resource="hibernate/User.hbm.xml"/>
-    <mapping resource="hibernate/MainCategory.hbm.xml"/>
-    <mapping resource="hibernate/SizeStockByColor.hbm.xml"/>
-    <mapping resource="hibernate/ProductDetail.hbm.xml"/>
-    <mapping resource="hibernate/ProductSize.hbm.xml"/>
     <mapping resource="hibernate/Address.hbm.xml"/>
-    <mapping resource="hibernate/ProductByColorImages.hbm.xml"/>
     <mapping resource="hibernate/FirstSubcategory.hbm.xml"/>
-    <mapping resource="hibernate/Cart.hbm.xml"/>
+    <mapping resource="hibernate/MainCategory.hbm.xml"/>
+    <mapping resource="hibernate/ProductSize.hbm.xml"/>
     <mapping resource="hibernate/ProductByColor.hbm.xml"/>
+    <mapping resource="hibernate/ProductDetail.hbm.xml"/>
+    <mapping resource="hibernate/Cart.hbm.xml"/>
+    <mapping resource="hibernate/SizeStockByColor.hbm.xml"/>
+    <mapping resource="hibernate/ProductByColorImages.hbm.xml"/>
+    <mapping resource="hibernate/SecondSubcategory.hbm.xml"/>
+    <mapping resource="hibernate/Invoice.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

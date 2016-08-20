@@ -5,11 +5,13 @@
 <%@page import="org.hibernate.Criteria"%>
 <%@page import="hibernate.*"%>
 <%@ include file="/import/hibernateConfig.jsp"%>
-<%    
-    String lastPage = session.getAttribute("lastPage").toString();
+<%    String lastPage = session.getAttribute("lastPage").toString();
     String productByColorID = session.getAttribute("productByColorID").toString();
     String size = "";
-    String type="";
+    String type = "";
+    boolean isConfirm = false;
+    boolean isDispatched = false;
+    boolean isReceivedByCustomer = false;
     try {
         size = request.getParameter("size").toString();
         type = request.getParameter("type").toString();
@@ -39,12 +41,12 @@
 
         if (lastPage.equals("cart")) {
             isOrder = false;
-            if(type.equals("cart")){
-                isCart=true;
-                isWishList=false;
-            }else{
-                isCart=false;
-                isWishList=true;
+            if (type.equals("cart")) {
+                isCart = true;
+                isWishList = false;
+            } else {
+                isCart = false;
+                isWishList = true;
             }
         }
         int pdID = Integer.parseInt(productByColorID);
@@ -59,11 +61,11 @@
         List orderList = cr.list();
 
         if (orderList.size() <= 0) {
-            Cart cart = new Cart(productSize, pbc, user, isCart, isWishList, isOrder, trxId);
+            Cart cart = new Cart(productSize, pbc, user, isCart, isWishList, isOrder, isConfirm, isDispatched, isReceivedByCustomer, 1, trxId);
             hib_session.save(cart);
             transaction.commit();
         }
-        response.sendRedirect("product-view.jsp?id="+productByColorID);
+        response.sendRedirect("product-view.jsp?id=" + productByColorID);
     } catch (Exception e) {
         //out.print("Err<br>" + e + "<br>" + size + "mm<br>" + session.getAttribute("isLoggedIn").toString());
         response.sendRedirect("auth.jsp");

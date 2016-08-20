@@ -109,4 +109,7 @@
 
     </body>
 </html>
+<%
+    session.setAttribute("price",price+"");
+%>
 <%@ include file="/import/footer.jsp"%>

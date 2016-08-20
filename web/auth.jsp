@@ -67,7 +67,7 @@
                                                 </li>
                                                 <li>
                                                     <label>Mobile Number *</label>
-                                                    <input type="tel" name="mobile" required="" ng-model="tel">
+                                                    <input type="number" name="mobile" required="" ng-model="tel">
                                                 </li>
                                                 <li>
                                                     <label>Password *</label>
