@@ -105,7 +105,7 @@ ul{
     list-style: none;
 }
 
-input {
+.popTheme {
   display: block;
   margin: 0;
   width: 100%;
@@ -123,10 +123,10 @@ input {
   -o-border-radius: none;
   border-radius: none;
 }
-input:focus {
+.popTheme:focus {
   outline: none;
 }
-.style-1 input {
+.style-1 .popTheme {
   padding: 10px;
   border: solid 1px gainsboro;
   -webkit-transition: box-shadow 0.3s, border 0.3s;
@@ -134,7 +134,7 @@ input:focus {
   -o-transition: box-shadow 0.3s, border 0.3s;
   transition: box-shadow 0.3s, border 0.3s;
 }
-.style-1 input:focus, .style-1 input.focus {
+.style-1 .popTheme:focus, .style-1 .popTheme.focus {
   border: solid 1px #707070;
   -webkit-box-shadow: 0 0 5px 1px #969696;
   -moz-box-shadow: 0 0 5px 1px #969696;

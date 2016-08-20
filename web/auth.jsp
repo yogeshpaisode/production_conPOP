@@ -33,14 +33,14 @@
                                             <ul class="input-list style-1">
                                                 <li>
                                                     <label>Email:</label>
-                                                    <input type="email" name="email" required="">
+                                                    <input type="email" name="email" required="" class="popTheme">
                                                 </li>
                                                 <li>
                                                     <label>Password:</label>
-                                                    <input type="password" name="password" required="">
+                                                    <input type="password" name="password" required=""  class="popTheme">
                                                 </li>
                                                 <li>
-                                                    <input type="submit" value="Sign In">
+                                                    <input type="submit" value="Sign In"  class="popTheme">
                                                 </li>
                                                 <li style="text-align: right;">
                                                     <a href="" style="text-decoration: underline;">I forgot my password</a>
@@ -55,33 +55,33 @@
                                             <ul class="input-list style-1">
                                                 <li>
                                                     <label>Email *</label>
-                                                    <input type="email" name="email" required="">
+                                                    <input type="email" name="email" required=""  class="popTheme">
                                                 </li>
                                                 <li>
                                                     <label>First Name *</label>
-                                                    <input type="text" name="firstName" required="">
+                                                    <input type="text" name="firstName" required=""  class="popTheme">
                                                 </li>
                                                 <li>
                                                     <label>Last Name *</label>
-                                                    <input type="text" name="lastName" required="">
+                                                    <input type="text" name="lastName" required=""  class="popTheme">
                                                 </li>
                                                 <li>
                                                     <label>Mobile Number *</label>
-                                                    <input type="number" name="mobile" required="" ng-model="tel">
+                                                    <input type="number" name="mobile" required="" ng-model="tel"  class="popTheme">
                                                 </li>
                                                 <li>
                                                     <label>Password *</label>
-                                                    <input type="password" required="" id="pass1">
+                                                    <input type="password" required="" id="pass1"  class="popTheme">
                                                 </li>
                                                 <li>
                                                     <label>Confirm Password  *</label>
-                                                    <input type="password" name="password" required="" id="pass2">
+                                                    <input type="password" name="password" required="" id="pass2"  class="popTheme">
                                                 </li>
                                                 <li>
                                                     <small>By joining you agree to our <a>terms and conditions</a> </small>
                                                 </li>
                                                 <li>
-                                                    <input type="submit" value="Join popcon">
+                                                    <input type="submit" value="Join popcon"  class="popTheme">
                                                 </li>
                                             </ul>
                                         </form>
