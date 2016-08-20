@@ -3,8 +3,8 @@
     Created on : Aug 13, 2016, 12:43:00 PM
     Author     : yogeshpaisode
 --%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=US-ASCII"
+         pageEncoding="US-ASCII" isErrorPage="true"%>
 <!DOCTYPE html>
 <html>
     <%@ include file="/import/dependencies.jsp"%>
@@ -29,8 +29,14 @@
                                 <div class="row">
 
                                     <div class="col-md-6 col-sm-6 col-xs-12">
+
                                         <form action="logInAction.jsp" method="post">
                                             <ul class="input-list style-1">
+                                                <% if (response.getStatus() == 500) {%>
+                                                <li>
+                                                    <font color="red"><%=exception.getMessage()%></font>
+                                                </li>
+                                                <%}%>
                                                 <li>
                                                     <label>Email:</label>
                                                     <input type="email" name="email" required="" class="popTheme">

@@ -1,10 +1,11 @@
+<%@ page language="java" contentType="text/html; charset=US-ASCII"
+    pageEncoding="US-ASCII" errorPage="auth.jsp"%>
 <%@page import="java.util.List"%>
 <%@page import="org.hibernate.criterion.Restrictions"%>
 <%@page import="org.hibernate.Criteria"%>
 <%@page import="hibernate.*"%>
 <%@ include file="/import/hibernateConfig.jsp"%>
-<%    
-    String email = request.getParameter("email");
+<%    String email = request.getParameter("email");
     String password = request.getParameter("password").trim();
     Criteria cr = hib_session.createCriteria(User.class);
     cr.add(Restrictions.eq("email", email));
@@ -25,7 +26,7 @@
             response.sendRedirect(lastPage);
         }
     } else {
-
+        throw new ServletException("Email or Password is Wrong");
     }
 
 %>
