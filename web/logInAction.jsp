@@ -5,7 +5,7 @@
 <%@ include file="/import/hibernateConfig.jsp"%>
 <%    
     String email = request.getParameter("email");
-    String password = request.getParameter("password");
+    String password = request.getParameter("password").trim();
     Criteria cr = hib_session.createCriteria(User.class);
     cr.add(Restrictions.eq("email", email));
     cr.add(Restrictions.eq("password", password));

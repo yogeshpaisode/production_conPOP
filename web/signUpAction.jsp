@@ -8,7 +8,7 @@
     String mobile = request.getParameter("mobile");
     //String gender = request.getParameter("gender");
     String gender="Male";
-    String password = request.getParameter("password");
+    String password = request.getParameter("password").trim();
 
     Transaction transaction = hib_session.beginTransaction();
     User user = new User(firstName, lastName, email, mobile, gender, password,null,null,null);
